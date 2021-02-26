@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float movementSpeed = 10f;
+    [SerializeField] private float movementSpeed = 4000f;
+    private Rigidbody2D rb;
     private Vector2 currentMove;
+
+    public void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -13,8 +20,8 @@ public class PlayerController : MonoBehaviour
 
     public void Update()
     {
-        Vector3 moveVelocity = movementSpeed * (currentMove.x * Vector3.right + currentMove.y * Vector3.forward);
-        Vector3 moveThisFrame = Time.deltaTime * moveVelocity;
-        transform.position += moveThisFrame;
+        Vector2 velocity = rb.velocity;
+        velocity.x = currentMove.x * movementSpeed * Time.deltaTime;
+        rb.velocity = velocity;
     }
 }
