@@ -19,4 +19,12 @@ public class BallController : MonoBehaviour
         rb.velocity = velocity;
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Destroyable")
+        {
+            Destroy(collision.gameObject);
+        }
+    }
+
 }
