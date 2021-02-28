@@ -10,14 +10,11 @@ public class BlockManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int y = 4; y < 6; y += 1)
-        {
-            for (int x = -9; x < 9; x += 2)
-            {
-                Instantiate(blockPrefab, new Vector3(x, y, 0), Quaternion.identity);
+        for(int x = -10; x < 10; x += 2) { 
+            for(int y = 5; y > 2; y--) {
+                Instantiate(blockPrefab, new Vector3((float) (x + 0.75), y, 0), Quaternion.identity);
             }
         }
-
     }
 
     // Update is called once per frame
