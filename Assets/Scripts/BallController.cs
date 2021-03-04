@@ -32,22 +32,32 @@ public class BallController : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if(collision.gameObject.tag == "Wall") {
-            // if hits a wall then reflect normally
+
+        // if hits a wall then reflect normally
+        if (collision.gameObject.tag == "Wall") {
             rb.velocity = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
-        }else if(collision.gameObject.tag == "Player") {
+        }
+
+        // if hits the player paddle then reflect differently based upon left/right/middle
+        else if (collision.gameObject.tag == "Player") {
             Vector3 playerPos = collision.gameObject.transform.position;
             Vector3 ballPos = this.transform.position;
 
-            // if hits the player then in the middle then reflect normally
+            // middle
             if (ballPos.x >= playerPos.x - 0.25 && ballPos.x <= playerPos.x + 0.25) {
                 rb.velocity = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
-            // else if hits the player to the left/right then send back the same way... 
+
+            // left/right
             } else {
                 // replace this...
                 rb.velocity = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
             }
-            
+        }
+
+        // if hits a destroyable object, deflect and then destroy it!
+        else if(collision.gameObject.tag == "Destroyable") {
+            rb.velocity = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
+            Destroy(collision.gameObject);
         }
     }
 
