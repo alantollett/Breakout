@@ -520,7 +520,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'SCORE: 000'
+  m_Text: 'SCORE: '
 --- !u!222 &104188363
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1403,6 +1403,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfed1c468e16bb54b9953a149ae36c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  livesText: {fileID: 639279417}
+  scoreText: {fileID: 104188362}
+  lives: 5
 --- !u!4 &635165400
 Transform:
   m_ObjectHideFlags: 0
@@ -1486,7 +1489,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Lives: 30'
+  m_Text: 'Lives: '
 --- !u!222 &639279418
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3473,6 +3476,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 21723263099516788, guid: 0ea0f0921990a6c44b5e41545a817bd6,
         type: 3}
+      propertyPath: gm
+      value: 
+      objectReference: {fileID: 635165399}
+    - target: {fileID: 21723263099516788, guid: 0ea0f0921990a6c44b5e41545a817bd6,
+        type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 104998808}
@@ -3486,6 +3494,11 @@ PrefabInstance:
       propertyPath: minSpeed
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 21723263099516788, guid: 0ea0f0921990a6c44b5e41545a817bd6,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 635165399}
     - target: {fileID: 21723263099516788, guid: 0ea0f0921990a6c44b5e41545a817bd6,
         type: 3}
       propertyPath: initialSpeed

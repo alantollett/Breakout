@@ -6,6 +6,7 @@ public class BallController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private Transform player;
+    [SerializeField] private GameManager gameManager;
 
     private bool inMotion;
     private Rigidbody2D rb;
@@ -65,6 +66,7 @@ public class BallController : MonoBehaviour
         if (collision.gameObject.tag == "Bottom") {
             rb.velocity = Vector2.zero;
             inMotion = false;
+            gameManager.removeLife();
         }
     }
 
