@@ -8,20 +8,18 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 currentMove;
 
-    public void Awake()
-    {
+    public void Awake() {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Move(InputAction.CallbackContext context)
-    {
+    public void Move(InputAction.CallbackContext context) {
         currentMove = context.ReadValue<Vector2>();
     }
 
-    public void Update()
-    {
+    public void Update() {
         Vector2 velocity = rb.velocity;
         velocity.x = currentMove.x * movementSpeed * Time.deltaTime;
         rb.velocity = velocity;
     }
+
 }
