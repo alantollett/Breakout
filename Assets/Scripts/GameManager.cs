@@ -9,12 +9,16 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private int lives = 5;
     [SerializeField] private Transform ball;
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject gameCompletedPanel;
+    [SerializeField] private GameObject blockHolder;
     private int score = 0;
+    private int level = 1;
 
     public void Start() {
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
         gameOverPanel.SetActive(false);
+        gameCompletedPanel.SetActive(false);
     }
 
     public void removeLife() {
@@ -29,13 +33,24 @@ public class GameManager : MonoBehaviour {
         this.score += score;
         scoreText.text = "Score: " + this.score;
 
-        if(this.score % 10 == 0) {
+        if (this.score % 10 == 0) {
             ball.gameObject.GetComponent<BallController>().speedUp();
+        }
+
+        if (blockHolder.transform.childCount == 1) {
+            gameCompletedPanel.SetActive(true);
         }
     }
 
+    public void nextLevel() {
+        SceneManager.LoadScene("Level" + (level + 1));
+        level += 1;
+    }
+
     public void restartGame() {
-        Debug.Log("Restarting");
         SceneManager.LoadScene("Level1");
+    }
+    public void quitGame() {
+        Application.Quit();
     }
 }
