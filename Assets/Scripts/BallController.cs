@@ -58,7 +58,7 @@ public class BallController : MonoBehaviour
         // if hits a destroyable object, deflect and then destroy it!
         else if(collision.gameObject.tag == "Destroyable") {
             rb.velocity = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<BlockController>().hit();
         }
     }
 
@@ -81,4 +81,7 @@ public class BallController : MonoBehaviour
         }
     }
 
+    public void speedUp() {
+        speed *= 1.1f;
+    }
 }
