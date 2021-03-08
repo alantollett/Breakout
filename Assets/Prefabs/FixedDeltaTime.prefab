@@ -43,4 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a8ec12e44817a4bbc5cca24ae625e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fixedDeltaTime: 2e-15
+  fixedDeltaTime: 2e-23

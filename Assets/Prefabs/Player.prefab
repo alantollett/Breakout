@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4720483622723454873}
   - component: {fileID: 2219769061663438109}
   - component: {fileID: 2716546827086422044}
-  - component: {fileID: 659713092404937778}
   - component: {fileID: 2784922602373181335}
   - component: {fileID: 2240472085794532194}
+  - component: {fileID: 7946328211210479582}
+  - component: {fileID: 5051844743561395670}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -113,7 +114,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 659713092404937778}
+      - m_Target: {fileID: 0}
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:
@@ -186,19 +187,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &659713092404937778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6525455304256929999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8698d01ef742e4f46a53871d83c3e477, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 3500
 --- !u!50 &2784922602373181335
 Rigidbody2D:
   serializedVersion: 4
@@ -246,3 +234,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.04, y: 0.24}
   m_EdgeRadius: 0
+--- !u!114 &7946328211210479582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525455304256929999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e82f89b07e4d1043baf4c6486c91a3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5051844743561395670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525455304256929999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a67a5db5208f8643919bf0de20ea7af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 10

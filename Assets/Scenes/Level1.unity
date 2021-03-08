@@ -133,6 +133,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &586623284 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5051844743561395670, guid: 6f55b55e2ed19f34e96a6a8c9ad54059,
+    type: 3}
+  m_PrefabInstance: {fileID: 1394144134}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a67a5db5208f8643919bf0de20ea7af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &635165399 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8868651547220932861, guid: 7d4fc801c55ebcc43a541ffc0f7dfcc5,
@@ -295,6 +307,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2716546827086422044, guid: 6f55b55e2ed19f34e96a6a8c9ad54059,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 586623284}
+    - target: {fileID: 2716546827086422044, guid: 6f55b55e2ed19f34e96a6a8c9ad54059,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Move
       objectReference: {fileID: 0}
     - target: {fileID: 4720483622723454873, guid: 6f55b55e2ed19f34e96a6a8c9ad54059,
         type: 3}
