@@ -7,6 +7,7 @@ public class BallBehaviour : MonoBehaviour, IEntity {
 
     [SerializeField] private float speed = 10f;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameManager gameManager;
 
     private CommandProcessor commandProcessor; 
     private Rigidbody2D rb;
@@ -48,7 +49,7 @@ public class BallBehaviour : MonoBehaviour, IEntity {
         if (collision.gameObject.tag == "Bottom") {
             rb.velocity = Vector2.zero;
             moving = false;
-            //gameManager.removeLife();
+            gameManager.removeLife();
         }
     }
     private void OnCollisionEnter2D(Collision2D collision) {
