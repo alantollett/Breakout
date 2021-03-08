@@ -40,7 +40,7 @@ public class BallBehaviour : MonoBehaviour, IEntity {
         if (context.started && !moving) {
             // fire the ball at an angle between 20 and 160 degrees to ensure that it
             // does not start off going too horizontal or even below the paddle...
-            commandProcessor.Execute(new FireCommand(this, Random.Range(20, 160), speed));
+            commandProcessor.Execute(new FireCommand(this, Random.Range(89, 91), speed));
             moving = true;
         }
     }

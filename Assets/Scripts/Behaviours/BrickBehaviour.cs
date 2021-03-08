@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class BrickBehaviour : MonoBehaviour {
 
-    //[SerializeField] private GameManager gameManager;
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private int maxHealth = 1;
     [SerializeField] private Sprite[] sprites = new Sprite[3];
     private int health;
@@ -24,14 +24,12 @@ public class BrickBehaviour : MonoBehaviour {
 
     public void hit() {
         health -= 1;
-        //gameManager.addScore(1);
 
         if(health <= 0) {
+            gameManager.addScore(1);
             Destroy(this.gameObject);
         } else {
             int step = maxHealth / 3;
-            Debug.Log(step);
-            Debug.Log(health);
 
             if(health == maxHealth - step) {
                 spriteRenderer.sprite = sprites[1];

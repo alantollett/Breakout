@@ -7,10 +7,10 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private Text livesText;
     [SerializeField] private Text scoreText;
     [SerializeField] private int lives = 5;
-    [SerializeField] private Transform ball;
+    [SerializeField] private GameObject ball;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject gameCompletedPanel;
-    [SerializeField] private GameObject blockHolder;
+    [SerializeField] private GameObject brickHolder;
     private int score = 0;
     private int level = 1;
 
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
             //ball.gameObject.GetComponent<BrickBehaviour>().speedUp();
         }
 
-        if (blockHolder.transform.childCount == 1) {
+        if (brickHolder.transform.childCount == 1) {
             gameCompletedPanel.SetActive(true);
         }
     }
