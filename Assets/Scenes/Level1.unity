@@ -417,6 +417,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1240379267}
     m_Modifications:
+    - target: {fileID: 2795790870882327329, guid: e2c80866cc4f2a0478292e92c73d9a60,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 635165399}
     - target: {fileID: 7154175387475906398, guid: e2c80866cc4f2a0478292e92c73d9a60,
         type: 3}
       propertyPath: m_RootOrder
@@ -889,6 +894,11 @@ PrefabInstance:
     - target: {fileID: 8868651547220932861, guid: 7d4fc801c55ebcc43a541ffc0f7dfcc5,
         type: 3}
       propertyPath: blockHolder
+      value: 
+      objectReference: {fileID: 1240379266}
+    - target: {fileID: 8868651547220932861, guid: 7d4fc801c55ebcc43a541ffc0f7dfcc5,
+        type: 3}
+      propertyPath: brickHolder
       value: 
       objectReference: {fileID: 1240379266}
     - target: {fileID: 8868651547220932861, guid: 7d4fc801c55ebcc43a541ffc0f7dfcc5,
