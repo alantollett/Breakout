@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4720483622723454873}
   - component: {fileID: 2219769061663438109}
   - component: {fileID: 2716546827086422044}
-  - component: {fileID: 2784922602373181335}
   - component: {fileID: 2240472085794532194}
   - component: {fileID: 7946328211210479582}
   - component: {fileID: 5051844743561395670}
@@ -187,27 +186,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!50 &2784922602373181335
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6525455304256929999}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 1
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 6
 --- !u!61 &2240472085794532194
 BoxCollider2D:
   m_ObjectHideFlags: 0

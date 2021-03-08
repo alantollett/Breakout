@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 3032754447268392715}
   - component: {fileID: 3032754447268392724}
   - component: {fileID: 3032754447268392725}
-  - component: {fileID: 21723263099516788}
   - component: {fileID: 8202345765798494244}
+  - component: {fileID: 5949689149318366973}
+  - component: {fileID: 1491790713318017149}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -93,7 +94,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3032754447268392726}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
@@ -122,21 +123,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.11
---- !u!114 &21723263099516788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3032754447268392726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dce62dc77ffbec443b76068e43550a14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 6
-  player: {fileID: 0}
-  gameManager: {fileID: 0}
 --- !u!114 &8202345765798494244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +151,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 21723263099516788}
+      - m_Target: {fileID: 0}
         m_MethodName: Fire
         m_Mode: 0
         m_Arguments:
@@ -183,3 +169,29 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5949689149318366973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032754447268392726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e82f89b07e4d1043baf4c6486c91a3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1491790713318017149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032754447268392726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a8f0559113e19418a79ed94e6c9bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 7
+  player: {fileID: 0}
