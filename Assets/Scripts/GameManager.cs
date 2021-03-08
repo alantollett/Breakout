@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
     public void restartGame() {
         SceneManager.LoadScene("Level1");
     }
-    public void quitGame() {
-        Application.Quit();
+    public void exitGame() {
+        SceneManager.LoadScene("Main Menu");
     }
 }

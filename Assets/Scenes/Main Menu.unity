@@ -476,7 +476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &248189182
 RectTransform:
   m_ObjectHideFlags: 0
@@ -898,12 +898,12 @@ GameObject:
   - component: {fileID: 505531857}
   - component: {fileID: 505531856}
   m_Layer: 5
-  m_Name: Main Menu Panel
+  m_Name: Main Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &505531856
 MonoBehaviour:
   m_ObjectHideFlags: 0
