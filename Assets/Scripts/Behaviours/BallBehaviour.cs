@@ -52,9 +52,9 @@ public class BallBehaviour : MonoBehaviour, IEntity {
         }
     }
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Destroyable") {
+        if (collision.gameObject.tag == "Brick") {
             //rb.velocity = Vector2.Reflect(rb.velocity, collision.contacts[0].normal);
-            //collision.gameObject.GetComponent<BlockController>().hit();
+            collision.gameObject.GetComponent<BrickBehaviour>().hit();
         }
     }
 }

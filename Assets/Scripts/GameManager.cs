@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
         scoreText.text = "Score: " + this.score;
 
         if (this.score % 10 == 0) {
-            ball.gameObject.GetComponent<BallController>().speedUp();
+            //ball.gameObject.GetComponent<BrickBehaviour>().speedUp();
         }
 
         if (blockHolder.transform.childCount == 1) {
