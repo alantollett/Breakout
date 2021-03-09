@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
+
 public class GameManager : MonoBehaviour {
 
     [SerializeField] private Text livesText;
@@ -47,9 +48,7 @@ public class GameManager : MonoBehaviour {
         level += 1;
     }
 
-    public void watchReplay() {
 
-    }
 
     public void restartGame() {
         SceneManager.LoadScene("Level1");

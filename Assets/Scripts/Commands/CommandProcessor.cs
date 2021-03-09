@@ -9,8 +9,6 @@ public class CommandProcessor : MonoBehaviour {
     public void Execute(Command c) {
         commands.Add(c);
         c.Execute();
-        Debug.Log(commands.Count);
     }
-
 
 }

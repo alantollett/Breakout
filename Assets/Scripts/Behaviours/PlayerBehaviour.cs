@@ -13,6 +13,8 @@ public class PlayerBehaviour : MonoBehaviour, IEntity {
     private Vector2 currentMove;
     private bool moving;
 
+    private string name;
+
     Rigidbody2D IEntity.rb => null;
 
     // cache resources
@@ -50,6 +52,8 @@ public class PlayerBehaviour : MonoBehaviour, IEntity {
             moving = false;
         }
     }
+
+    public string getName() { return this.name; }
 
 
 }
