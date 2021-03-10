@@ -13,18 +13,16 @@ public class Player : MonoBehaviour, IEntity {
     [SerializeField] private float xBound = 6.9f;
 
     private CommandProcessor commandProcessor;
-    //private GameObject ball;
     private Vector2 currentMove;
     private bool moving;
+    private Ball ball;
 
     // player data values
     private string playerName;
     private int highestLevelCompleted;
     private List<Command[]> recordings;
     private Dictionary<int, int> highScores;
-    // private SpriteImage paddleImage...?
 
-    // needed as implements IEntity
     Rigidbody2D IEntity.rb => null; 
 
     // cache resources that may be needed throughout runtime
@@ -60,6 +58,7 @@ public class Player : MonoBehaviour, IEntity {
 
     // deal with movement
     public void Update() {
+        // move the player (paddle)
         if (moving) {
             commandProcessor.Execute(new MoveCommand(this, currentMove, movementSpeed * Time.deltaTime));
 
@@ -87,9 +86,12 @@ public class Player : MonoBehaviour, IEntity {
         }
     }
     public void Fire(InputAction.CallbackContext context) {
-        // fire ball, perhaps have a ball attribute and call fire method on that...?
-        // just because I want all commands from each GO stored in one CommandProcessor,
-        // so maybe even make a singleton command processor?
+        if (context.started && !ball.isMoving()) {
+            // fire the ball at an angle between 20 and 160 degrees to ensure that it
+            // does not start off going too horizontal or even below the paddle...
+            commandProcessor.Execute(new FireCommand(ball, Random.Range(89, 91), ball.getMovementSpeed()));
+            ball.setMoving(true);
+        }
     }
 
 
@@ -100,4 +102,6 @@ public class Player : MonoBehaviour, IEntity {
     public string getPlayerName() { return playerName; }
     public int getHighestLevelCompleted() { return highestLevelCompleted; }
     public Dictionary<int, int> getHighScores() { return highScores; }
+
+    public void setBall(Ball ball) { this.ball = ball; }
 }

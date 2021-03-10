@@ -14,6 +14,14 @@ public class MenuManager : MonoBehaviour {
     [SerializeField] private Canvas levelsCanvas;
     [SerializeField] private Button[] levelButtons;
     [SerializeField] private GameObject[] brickPrefabs;
+    [SerializeField] private GameObject wallsPrefab;
+    [SerializeField] private GameObject ballPrefab;
+
+    [SerializeField] private Canvas gameOverlayCanvas;
+    [SerializeField] private Text livesText;
+    [SerializeField] private Text scoreText;
+    private int lives;
+    private int score;
 
     private Player player;
 
@@ -22,6 +30,7 @@ public class MenuManager : MonoBehaviour {
         userCanvas.gameObject.SetActive(true); 
         mainCanvas.gameObject.SetActive(false);
         levelsCanvas.gameObject.SetActive(false);
+        gameOverlayCanvas.gameObject.SetActive(false);
 
         // load all existing player names and populate the existing player dropdown menu with them
         string path = Application.persistentDataPath + "/";
@@ -68,12 +77,14 @@ public class MenuManager : MonoBehaviour {
         userCanvas.gameObject.SetActive(true);
         mainCanvas.gameObject.SetActive(false);
         levelsCanvas.gameObject.SetActive(false);
+        gameOverlayCanvas.gameObject.SetActive(false);
     }
 
     public void openMain() {
         userCanvas.gameObject.SetActive(false);
         mainCanvas.gameObject.SetActive(true);
         levelsCanvas.gameObject.SetActive(false);
+        gameOverlayCanvas.gameObject.SetActive(false);
 
         usernameText.text = player.getPlayerName();
     }
@@ -82,8 +93,9 @@ public class MenuManager : MonoBehaviour {
         userCanvas.gameObject.SetActive(false);
         mainCanvas.gameObject.SetActive(false);
         levelsCanvas.gameObject.SetActive(true);
+        gameOverlayCanvas.gameObject.SetActive(false);
 
-        for(int i = 0; i < player.getHighestLevelCompleted() + 1; i++) {
+        for (int i = 0; i < player.getHighestLevelCompleted() + 1; i++) {
             levelButtons[i].GetComponentInChildren<Text>().color = new Color(0, 255, 0);
         }
     }
@@ -97,7 +109,31 @@ public class MenuManager : MonoBehaviour {
         mainCanvas.gameObject.SetActive(false);
         levelsCanvas.gameObject.SetActive(false);
 
-        GameObject brickHolder = Instantiate(brickPrefabs[level]);
+        // add the in-game overlay
+        gameOverlayCanvas.gameObject.SetActive(true);
+
+        // set lives and score to initial values
+        lives = 3;
+        score = 0;
+        livesText.text = "Lives: " + lives;
+        scoreText.text = "Score: " + score;
+
+        // load in the walls, ball and bricks for the level
+        Instantiate(wallsPrefab);
+
+        Ball ball = Instantiate(ballPrefab).GetComponent<Ball>();
+        player.setBall(ball);
+        ball.setPlayerTransform(player.gameObject.transform);
+        ball.setManager(this);
+        
+        Instantiate(brickPrefabs[level]);
+
+        // add the player object to the scene
         player.gameObject.SetActive(true);
+    }
+
+    public void removeLife() { 
+        lives--;
+        livesText.text = "Lives: " + lives;
     }
 }
