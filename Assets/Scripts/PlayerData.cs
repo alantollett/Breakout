@@ -12,7 +12,7 @@ public class PlayerData {
 
 
     public PlayerData(Player player) {
-        this.name = player.getName();
+        this.name = player.getPlayerName();
         highestLevelCompleted = player.getHighestLevelCompleted();
         highScores = player.getHighScores();
     }

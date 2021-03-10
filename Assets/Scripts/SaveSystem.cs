@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class SaveSystem {
     public static void savePlayerData(Player player) {
-        string path = Application.persistentDataPath + "/" + player.getName() + ".player";
+        string path = Application.persistentDataPath + "/" + player.getPlayerName() + ".player";
         FileStream stream = new FileStream(path, FileMode.Create);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, new PlayerData(player));

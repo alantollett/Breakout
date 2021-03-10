@@ -9,12 +9,18 @@ public class MenuManager : MonoBehaviour {
     [SerializeField] private GameObject playerPrefab;
 
     [SerializeField] private Canvas mainCanvas;
+    [SerializeField] private Text usernameText;
+
     [SerializeField] private Canvas levelsCanvas;
+
+    private Player player;
 
 
     public void Start() {
-        userCanvas.gameObject.SetActive(true);
-        
+        userCanvas.gameObject.SetActive(true); 
+        mainCanvas.gameObject.SetActive(false);
+        levelsCanvas.gameObject.SetActive(false);
+
         // load all existing player names and populate the existing player dropdown menu with them
         string path = Application.persistentDataPath + "/";
         string[] files = System.IO.Directory.GetFiles(path, "*.player");
@@ -32,29 +38,45 @@ public class MenuManager : MonoBehaviour {
 
         // populate existingUser dropdown
 
-        mainCanvas.gameObject.SetActive(false);
-        levelsCanvas.gameObject.SetActive(false);
+
     }
 
     public void quitGame() {
         Application.Quit();
     }
 
-    public void login() {
-        if(existingUser.value != 0) {
-            // existing user dropdown was edited, so create a user with that name...
-            GameObject playerObject = Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity);
-            Player playerComponent = playerObject.GetComponent<Player>();
-            playerComponent.initialise(existingUser.options[existingUser.value].text.ToLower(), false);
-
-        } else if(newUser.text != null && newUser.text.Length > 0) {
+    public void login(bool isNewUser) {
+        if (!isNewUser) {
+            if (existingUser.value != 0) {
+                // existing user dropdown was edited, so create a user with that name...
+                GameObject playerObject = Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity);
+                player = playerObject.GetComponent<Player>();
+                player.initialise(existingUser.options[existingUser.value].text.ToLower(), false);
+                openMainMenu();
+            }
+        } else if (newUser.text != null && newUser.text.Length > 0) {
             // new user text field was edited, so create a new user with that name...
-            GameObject playerObject = Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity);
-            Player playerComponent = playerObject.GetComponent<Player>();
-            playerComponent.initialise(newUser.text.ToLower(), true);
-
             // need to check if the user exists before doing this!!!!! loop through dropdown options... check if equal
-
+            GameObject playerObject = Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity);
+            player = playerObject.GetComponent<Player>();
+            player.initialise(newUser.text.ToLower(), true);
+            openMainMenu();
         }
+    }
+
+    public void logout() {
+        Destroy(player.gameObject);
+        player = null;
+        userCanvas.gameObject.SetActive(true);
+        mainCanvas.gameObject.SetActive(false);
+        levelsCanvas.gameObject.SetActive(false);
+    }
+
+    public void openMainMenu() {
+        userCanvas.gameObject.SetActive(false);
+        mainCanvas.gameObject.SetActive(true);
+        levelsCanvas.gameObject.SetActive(false);
+
+        usernameText.text = player.getPlayerName();
     }
 }

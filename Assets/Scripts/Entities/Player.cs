@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    private string name;
+    private string playerName;
     private int highestLevelCompleted;
     private List<Command[]> recordings;
     private Dictionary<int, int> highScores;
 
     // initialises player data values
     public void initialise(string name, bool isNewPlayer) {
-        this.name = name;
+        playerName = name;
      
         if (isNewPlayer) {
             // if new player then set data values to defaults
@@ -23,13 +23,13 @@ public class Player : MonoBehaviour {
             SaveSystem.savePlayerData(this);
         } else {
             // otherwise laod the player data from disk
-            PlayerData data = SaveSystem.loadPlayerData(this.name);
+            PlayerData data = SaveSystem.loadPlayerData(this.playerName);
             highestLevelCompleted = data.getHighestLevelCompleted();
             highScores = data.getHighScores();
         }
     }
 
-    public string getName() { return name; }
+    public string getPlayerName() { return playerName; }
     public int getHighestLevelCompleted() { return highestLevelCompleted; }
     public Dictionary<int, int> getHighScores() { return highScores; }
 }
