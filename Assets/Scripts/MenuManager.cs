@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour {
     [SerializeField] private Text usernameText;
 
     [SerializeField] private Canvas levelsCanvas;
+    [SerializeField] private Button[] levelButtons;
 
     private Player player;
 
@@ -52,7 +53,7 @@ public class MenuManager : MonoBehaviour {
                 GameObject playerObject = Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity);
                 player = playerObject.GetComponent<Player>();
                 player.initialise(existingUser.options[existingUser.value].text.ToLower(), false);
-                openMainMenu();
+                openMain();
             }
         } else if (newUser.text != null && newUser.text.Length > 0) {
             // new user text field was edited, so create a new user with that name...
@@ -60,11 +61,11 @@ public class MenuManager : MonoBehaviour {
             GameObject playerObject = Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity);
             player = playerObject.GetComponent<Player>();
             player.initialise(newUser.text.ToLower(), true);
-            openMainMenu();
+            openMain();
         }
     }
 
-    public void logout() {
+    public void openUser() {
         Destroy(player.gameObject);
         player = null;
         userCanvas.gameObject.SetActive(true);
@@ -72,11 +73,21 @@ public class MenuManager : MonoBehaviour {
         levelsCanvas.gameObject.SetActive(false);
     }
 
-    public void openMainMenu() {
+    public void openMain() {
         userCanvas.gameObject.SetActive(false);
         mainCanvas.gameObject.SetActive(true);
         levelsCanvas.gameObject.SetActive(false);
 
         usernameText.text = player.getPlayerName();
+    }
+
+    public void openLevels() {
+        userCanvas.gameObject.SetActive(false);
+        mainCanvas.gameObject.SetActive(false);
+        levelsCanvas.gameObject.SetActive(true);
+
+        for(int i = 0; i < player.getHighestLevelCompleted() + 1; i++) {
+            levelButtons[i].GetComponentInChildren<Text>().color = new Color(0, 255, 0);
+        }
     }
 }
