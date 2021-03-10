@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour {
 
     [SerializeField] private Canvas levelsCanvas;
     [SerializeField] private Button[] levelButtons;
+    [SerializeField] private GameObject[] brickPrefabs;
 
     private Player player;
 
@@ -45,6 +46,7 @@ public class MenuManager : MonoBehaviour {
             if (existingUser.value != 0) {
                 // existing user dropdown was edited, so create a user with that name...
                 GameObject playerObject = Instantiate(playerPrefab);
+                playerObject.SetActive(false);
                 player = playerObject.GetComponent<Player>();
                 player.initialisePlayerData(existingUser.options[existingUser.value].text.ToLower(), false);
                 openMain();
@@ -53,6 +55,7 @@ public class MenuManager : MonoBehaviour {
             // new user text field was edited, so create a new user with that name...
             // need to check if the user exists before doing this!!!!! loop through dropdown options... check if equal
             GameObject playerObject = Instantiate(playerPrefab);
+            playerObject.SetActive(false);
             player = playerObject.GetComponent<Player>();
             player.initialisePlayerData(newUser.text.ToLower(), true);
             openMain();
@@ -85,13 +88,16 @@ public class MenuManager : MonoBehaviour {
         }
     }
 
+    // 0 = tutorial, 1 = level 1, ...
     public void loadLevel(int level) {
+        if (level > player.getHighestLevelCompleted() + 1) return;
+
         // turn off all menus
         userCanvas.gameObject.SetActive(false);
         mainCanvas.gameObject.SetActive(false);
         levelsCanvas.gameObject.SetActive(false);
 
-
-
+        GameObject brickHolder = Instantiate(brickPrefabs[level]);
+        player.gameObject.SetActive(true);
     }
 }
