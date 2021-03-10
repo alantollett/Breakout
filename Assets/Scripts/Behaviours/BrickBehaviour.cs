@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class BrickBehaviour : MonoBehaviour {
 
-    [SerializeField] private GameManager gameManager;
+    [SerializeField] private MenuManager manager;
     [SerializeField] private int maxHealth = 1;
     [SerializeField] private Sprite[] sprites = new Sprite[3];
     private int health;
@@ -14,6 +14,7 @@ public class BrickBehaviour : MonoBehaviour {
     // cache resources
     public void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        
     }
 
     // initialise values
@@ -26,7 +27,7 @@ public class BrickBehaviour : MonoBehaviour {
         health -= 1;
 
         if(health <= 0) {
-            gameManager.addScore(1);
+            manager.addScore(1);
             Destroy(this.gameObject);
         } else {
             int step = maxHealth / 3;
@@ -39,4 +40,6 @@ public class BrickBehaviour : MonoBehaviour {
         }
 
     }
+
+    public void setManager(MenuManager manager) { this.manager = manager; }
 }

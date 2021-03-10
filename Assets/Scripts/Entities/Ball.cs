@@ -39,7 +39,7 @@ public class Ball : MonoBehaviour, IEntity {
     }
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Brick") {
-            //collision.gameObject.GetComponent<BrickBehaviour>().hit();
+            collision.gameObject.GetComponent<BrickBehaviour>().hit();
         }
     }
 

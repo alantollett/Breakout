@@ -118,7 +118,11 @@ public class MenuManager : MonoBehaviour {
 
         // load in the game objects
         walls = Instantiate(wallsPrefab); 
+
         bricks = Instantiate(brickPrefabs[level]);
+        foreach (Transform child in bricks.transform) {
+            child.GetComponent<BrickBehaviour>().setManager(this);
+        }
 
         Ball ball = Instantiate(ballPrefab).GetComponent<Ball>();
         player.setBall(ball);
@@ -137,7 +141,25 @@ public class MenuManager : MonoBehaviour {
         if(lives == 0) {
             gameOverlayCanvas.gameObject.SetActive(false);
             losePanel.SetActive(true);
+            //winPanel.SetActive(true);
+            //player.setHighestLevelCompleted(player.getHighestLevelCompleted() + 1);
         }
+    }
+
+    public void addScore(int score) {
+        this.score += score;
+        scoreText.text = "Score: " + this.score;
+
+        if (bricks.transform.childCount == 1) {
+            gameOverlayCanvas.gameObject.SetActive(false);
+            winPanel.SetActive(true);
+            player.setHighestLevelCompleted(player.getHighestLevelCompleted() + 1);
+        }
+    }
+
+    public void playNextLevel() {
+        clearLevel();
+        loadLevel(currentLevel + 1);
     }
 
     public void playAgain() {
