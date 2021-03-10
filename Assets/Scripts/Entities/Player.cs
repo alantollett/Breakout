@@ -104,4 +104,8 @@ public class Player : MonoBehaviour, IEntity {
     public Dictionary<int, int> getHighScores() { return highScores; }
 
     public void setBall(Ball ball) { this.ball = ball; }
+
+    public Ball getBall() { return ball; }
+
+    public void setHighestLevelCompleted(int level) { highestLevelCompleted = level; }
 }

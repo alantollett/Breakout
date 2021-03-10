@@ -20,17 +20,22 @@ public class MenuManager : MonoBehaviour {
     [SerializeField] private Canvas gameOverlayCanvas;
     [SerializeField] private Text livesText;
     [SerializeField] private Text scoreText;
+
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject losePanel;
+
     private int lives;
     private int score;
+    private GameObject bricks;
+    private GameObject walls;
+    private int currentLevel;
 
     private Player player;
 
 
     public void Start() {
-        userCanvas.gameObject.SetActive(true); 
-        mainCanvas.gameObject.SetActive(false);
-        levelsCanvas.gameObject.SetActive(false);
-        gameOverlayCanvas.gameObject.SetActive(false);
+        disableMenus();
+        userCanvas.gameObject.SetActive(true);
 
         // load all existing player names and populate the existing player dropdown menu with them
         string path = Application.persistentDataPath + "/";
@@ -74,26 +79,22 @@ public class MenuManager : MonoBehaviour {
     public void openUser() {
         Destroy(player.gameObject);
         player = null;
+
+        disableMenus();
         userCanvas.gameObject.SetActive(true);
-        mainCanvas.gameObject.SetActive(false);
-        levelsCanvas.gameObject.SetActive(false);
-        gameOverlayCanvas.gameObject.SetActive(false);
     }
 
     public void openMain() {
-        userCanvas.gameObject.SetActive(false);
+        clearLevel();
+        disableMenus();
         mainCanvas.gameObject.SetActive(true);
-        levelsCanvas.gameObject.SetActive(false);
-        gameOverlayCanvas.gameObject.SetActive(false);
 
         usernameText.text = player.getPlayerName();
     }
 
     public void openLevels() {
-        userCanvas.gameObject.SetActive(false);
-        mainCanvas.gameObject.SetActive(false);
+        disableMenus();
         levelsCanvas.gameObject.SetActive(true);
-        gameOverlayCanvas.gameObject.SetActive(false);
 
         for (int i = 0; i < player.getHighestLevelCompleted() + 1; i++) {
             levelButtons[i].GetComponentInChildren<Text>().color = new Color(0, 255, 0);
@@ -103,31 +104,28 @@ public class MenuManager : MonoBehaviour {
     // 0 = tutorial, 1 = level 1, ...
     public void loadLevel(int level) {
         if (level > player.getHighestLevelCompleted() + 1) return;
-
-        // turn off all menus
-        userCanvas.gameObject.SetActive(false);
-        mainCanvas.gameObject.SetActive(false);
-        levelsCanvas.gameObject.SetActive(false);
-
-        // add the in-game overlay
+        clearLevel();
+        disableMenus();
         gameOverlayCanvas.gameObject.SetActive(true);
 
-        // set lives and score to initial values
+
+        // reset initial values
+        currentLevel = level;
         lives = 3;
         score = 0;
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
 
-        // load in the walls, ball and bricks for the level
-        Instantiate(wallsPrefab);
+        // load in the game objects
+        walls = Instantiate(wallsPrefab); 
+        bricks = Instantiate(brickPrefabs[level]);
 
         Ball ball = Instantiate(ballPrefab).GetComponent<Ball>();
         player.setBall(ball);
         ball.setPlayerTransform(player.gameObject.transform);
         ball.setManager(this);
         
-        Instantiate(brickPrefabs[level]);
-
+        
         // add the player object to the scene
         player.gameObject.SetActive(true);
     }
@@ -135,5 +133,48 @@ public class MenuManager : MonoBehaviour {
     public void removeLife() { 
         lives--;
         livesText.text = "Lives: " + lives;
+
+        if(lives == 0) {
+            gameOverlayCanvas.gameObject.SetActive(false);
+            losePanel.SetActive(true);
+        }
+    }
+
+    public void playAgain() {
+        clearLevel();
+        loadLevel(currentLevel);
+    }
+
+    private void clearLevel() {
+        // remove the ball
+        if(player.getBall() != null) {
+            Destroy(player.getBall().gameObject);
+            player.setBall(null);
+        }
+
+        // remove the bricks
+        if(bricks != null) {
+            Destroy(bricks);
+            bricks = null;
+        }
+
+        // remove the walls
+        if(walls != null) {
+            Destroy(walls);
+            walls = null;
+        }
+
+        // disable the player and reset location
+        player.gameObject.SetActive(false);
+        player.gameObject.transform.position = new Vector2(0, player.gameObject.transform.position.y);
+    }
+
+    private void disableMenus() {
+        userCanvas.gameObject.SetActive(false);
+        mainCanvas.gameObject.SetActive(false);
+        levelsCanvas.gameObject.SetActive(false);
+        gameOverlayCanvas.gameObject.SetActive(false);
+        losePanel.SetActive(false);
+        winPanel.SetActive(false);
     }
 }
