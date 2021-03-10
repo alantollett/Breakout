@@ -34,12 +34,6 @@ public class MenuManager : MonoBehaviour {
             string playerName = parts[parts.Length - 1].Split('.')[0];
             existingUser.options.Add(new Dropdown.OptionData(playerName));
         }
-        
-        
-
-        // populate existingUser dropdown
-
-
     }
 
     public void quitGame() {
@@ -50,17 +44,17 @@ public class MenuManager : MonoBehaviour {
         if (!isNewUser) {
             if (existingUser.value != 0) {
                 // existing user dropdown was edited, so create a user with that name...
-                GameObject playerObject = Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity);
+                GameObject playerObject = Instantiate(playerPrefab);
                 player = playerObject.GetComponent<Player>();
-                player.initialise(existingUser.options[existingUser.value].text.ToLower(), false);
+                player.initialisePlayerData(existingUser.options[existingUser.value].text.ToLower(), false);
                 openMain();
             }
         } else if (newUser.text != null && newUser.text.Length > 0) {
             // new user text field was edited, so create a new user with that name...
             // need to check if the user exists before doing this!!!!! loop through dropdown options... check if equal
-            GameObject playerObject = Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity);
+            GameObject playerObject = Instantiate(playerPrefab);
             player = playerObject.GetComponent<Player>();
-            player.initialise(newUser.text.ToLower(), true);
+            player.initialisePlayerData(newUser.text.ToLower(), true);
             openMain();
         }
     }
@@ -89,5 +83,15 @@ public class MenuManager : MonoBehaviour {
         for(int i = 0; i < player.getHighestLevelCompleted() + 1; i++) {
             levelButtons[i].GetComponentInChildren<Text>().color = new Color(0, 255, 0);
         }
+    }
+
+    public void loadLevel(int level) {
+        // turn off all menus
+        userCanvas.gameObject.SetActive(false);
+        mainCanvas.gameObject.SetActive(false);
+        levelsCanvas.gameObject.SetActive(false);
+
+
+
     }
 }

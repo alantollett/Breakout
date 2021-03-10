@@ -13,7 +13,6 @@ public class PlayerBehaviour : MonoBehaviour, IEntity {
     private Vector2 currentMove;
     private bool moving;
 
-    private string name;
 
     Rigidbody2D IEntity.rb => null;
 
@@ -53,7 +52,6 @@ public class PlayerBehaviour : MonoBehaviour, IEntity {
         }
     }
 
-    public string getName() { return this.name; }
 
 
 }
