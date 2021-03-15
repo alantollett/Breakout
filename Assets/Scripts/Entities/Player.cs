@@ -109,4 +109,9 @@ public class Player : MonoBehaviour, IEntity {
     public List<List<Command>> getRecordings() {
         return recordings;
     }
+
+    public CommandProcessor getCommandProcessor() {
+        return commandProcessor;
+    }
+
 }

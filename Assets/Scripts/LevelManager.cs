@@ -14,9 +14,10 @@ public class LevelManager : MonoBehaviour {
     private Player player;
     private Ball ball;
     private GameObject bricks;
+    private List<Command> currentRecording;
 
     private int currentLevel;
-    private float startTime;
+    private int frame;
 
     public void Awake() {
         entityManager = GetComponent<EntityManager>();
@@ -24,6 +25,24 @@ public class LevelManager : MonoBehaviour {
 
         player = entityManager.getPlayer();
         ball = entityManager.getBall();
+    }
+
+    private void FixedUpdate() {
+        frame++;
+    }
+
+    private void Update() {
+        if (currentRecording != null && currentRecording.Count > 0) {
+            while(currentRecording[0] != null && frame >= currentRecording[0].getFrame()) {
+                currentRecording[0].Execute();
+
+                if (currentRecording[0].GetType() == typeof(FireCommand)) {
+                    ball.setMoving(true);
+                }
+
+                currentRecording.Remove(currentRecording[0]);
+            }
+        }
     }
 
     public void loadLevel(int level) {
@@ -43,22 +62,17 @@ public class LevelManager : MonoBehaviour {
         // load in the new bricks
         bricks = Instantiate(levels[level]);
 
-        startTime = Time.timeSinceLevelLoad;
+        // reset the recording
+        player.getCommandProcessor().clear();
+
+        frame = 0;
     }
 
     public void loadRecording(List<Command> recording, int level) {
-        Debug.Log("LOADING RECORDING");
         loadLevel(level);
 
-        startTime = Time.timeSinceLevelLoad;
-        while(recording.Count > 0) {
-            float currentTime = Time.timeSinceLevelLoad - startTime;
-
-            if (recording[0].getTime() >= currentTime) {
-                recording[0].Execute();
-                recording.Remove(recording[0]);
-            }
-        }
+        currentRecording = recording;
+        frame = 0;
     }
 
     public void clearLevel() {
@@ -101,8 +115,8 @@ public class LevelManager : MonoBehaviour {
         return levels.Length;
     }
 
-    public float getStartTime() {
-        return startTime;
+    public int getFrame() {
+        return frame;
     }
 
     public Player getPlayer() {

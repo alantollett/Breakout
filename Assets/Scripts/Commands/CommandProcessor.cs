@@ -10,7 +10,7 @@ public class CommandProcessor : MonoBehaviour {
         c.Execute();
     }
 
-    public List<Command> clear() {
+    public List<Command> clear() { 
         List<Command> tmp = commands;
         commands = new List<Command>();
         return tmp;

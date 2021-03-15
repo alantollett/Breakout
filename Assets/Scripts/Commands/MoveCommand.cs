@@ -5,7 +5,7 @@ public class MoveCommand : Command {
     private Vector2 direction;
     private float distance;
 
-    public MoveCommand(IEntity entity, float time, Vector2 direction, float distance) : base(entity, time){
+    public MoveCommand(IEntity entity, int frame, Vector2 direction, float distance) : base(entity, frame){
         this.direction = direction;
         this.distance = distance;
     }
@@ -16,6 +16,6 @@ public class MoveCommand : Command {
 
 
     public override string ToString() {
-        return "MoveCommand:" + entity + "," + time + "," + direction.x + "," + direction.y + "," + distance;
+        return "MoveCommand:" + entity + "," + frame + "," + direction.x + "," + direction.y + "," + distance;
     }
 }

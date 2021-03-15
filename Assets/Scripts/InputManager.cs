@@ -32,8 +32,8 @@ public class InputManager : MonoBehaviour {
 
     public void Update() {
         if (moving) {
-            float time = Time.timeSinceLevelLoad - levelManager.getStartTime();
-            commandProcessor.Execute(new MoveCommand(player, time, currentMove, movementSpeed * Time.deltaTime));
+            int frame = levelManager.getFrame();
+            commandProcessor.Execute(new MoveCommand(player, frame, currentMove, movementSpeed * Time.deltaTime));
 
             // ensure that paddle is within bounds of the screen via code (not using RBs - read notes)
             if (transform.position.x >= paddleXBound) {
@@ -59,8 +59,8 @@ public class InputManager : MonoBehaviour {
         if (context.started && !ball.isMoving()) {
             // fire the ball at an angle between 20 and 160 degrees to ensure that it
             // does not start off going too horizontal or even below the paddle...
-            float time = Time.timeSinceLevelLoad - levelManager.getStartTime();
-            commandProcessor.Execute(new FireCommand(ball, time, Random.Range(89, 91), ball.getMovementSpeed()));
+            int frame = levelManager.getFrame();
+            commandProcessor.Execute(new FireCommand(ball, frame, Random.Range(89, 91), ball.getMovementSpeed()));
             ball.setMoving(true);
         }
     }

@@ -3,14 +3,14 @@
 public abstract class Command {
 
     protected IEntity entity;
-    protected float time;
+    protected int frame;
 
-    public Command(IEntity entity, float time) {
+    public Command(IEntity entity, int frame) {
         this.entity = entity;
-        this.time = time;
+        this.frame = frame;
     }
 
-    public float getTime() { return time; }
+    public float getFrame() { return frame; }
 
     public abstract void Execute();
 
