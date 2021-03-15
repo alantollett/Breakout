@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Canvas userCanvas;
     [SerializeField] private Canvas levelsCanvas;
     [SerializeField] private Canvas mainCanvas;
+    [SerializeField] private Canvas recordingsCanvas;
     [SerializeField] private Canvas gameOverlayCanvas;
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject losePanel;
@@ -40,9 +41,9 @@ public class UIManager : MonoBehaviour {
             player = playerObject.GetComponent<Player>();
 
             if (isNewUser) {
-                player.initialisePlayerData(newUser.text.ToLower(), true);
+                player.load(newUser.text.ToLower(), true);
             } else {
-                player.initialisePlayerData(existingUser.options[existingUser.value].text.ToLower(), false);
+                player.load(existingUser.options[existingUser.value].text.ToLower(), false);
             }
 
             openMenu("main");
@@ -72,10 +73,18 @@ public class UIManager : MonoBehaviour {
             gameOverlayCanvas.gameObject.SetActive(true);
         } else if (menu.Equals("win")) {
             winPanel.SetActive(true);
+            player.save();
         } else if (menu.Equals("lose")) {
             losePanel.SetActive(true);
-        }else if (menu.Equals("recordings")) {
-            Debug.Log("Not yet implemented");
+            player.save();
+        } else if (menu.Equals("recordings")) {
+            recordingsCanvas.gameObject.SetActive(true);
+
+            if (player.getRecordings().Count > 0) {
+                foreach(Command c in player.getRecordings()[0]) {
+                    //Instantiate(recordingPrefab);
+                }
+            }
         }
     }
 
@@ -84,6 +93,7 @@ public class UIManager : MonoBehaviour {
         mainCanvas.gameObject.SetActive(false);
         levelsCanvas.gameObject.SetActive(false);
         gameOverlayCanvas.gameObject.SetActive(false);
+        recordingsCanvas.gameObject.SetActive(false);
         losePanel.SetActive(false);
         winPanel.SetActive(false);
     }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 public abstract class Command {
 
     protected IEntity entity;
@@ -10,4 +11,6 @@ public abstract class Command {
     }
 
     public abstract void Execute();
+
+    public override abstract string ToString();
 }

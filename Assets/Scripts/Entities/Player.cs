@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CommandProcessor))]
 public class Player : MonoBehaviour, IEntity {
     private UIManager uiManager;
     private LevelManager levelManager;
+    private CommandProcessor commandProcessor;
 
     private string playerName;
     private int highestLevelCompleted;
-    private List<Command[]> recordings;
+    private List<List<Command>> recordings;
     private Dictionary<int, int> highScores;
     private int lives;
     private int score;
@@ -17,25 +19,36 @@ public class Player : MonoBehaviour, IEntity {
     public void Awake() {
         uiManager = GameObject.Find("Game Manager").GetComponent<UIManager>();
         levelManager = GameObject.Find("Game Manager").GetComponent<LevelManager>();
+        commandProcessor = GetComponent<CommandProcessor>();
     }
 
-    public void initialisePlayerData(string name, bool isNewPlayer) {
+    public void load(string name, bool isNewPlayer) {
         playerName = name;
 
         if (isNewPlayer) {
             // if new player then set data values to defaults
             highestLevelCompleted = 0;
-            recordings = new List<Command[]>();
+            recordings = new List<List<Command>>();
             highScores = new Dictionary<int, int>();
 
             // and then save the new player to disk
             SaveSystem.savePlayerData(this);
         } else {
             // otherwise laod the player data from disk
-            PlayerData data = SaveSystem.loadPlayerData(this.playerName);
+            PlayerData data = SaveSystem.loadPlayerData(playerName);
             highestLevelCompleted = data.getHighestLevelCompleted();
-            highScores = data.getHighScores();
+            //highScores = data.getHighScores();
+            recordings = data.getRecordings(this);
+
+            if(recordings == null) {
+                recordings = new List<List<Command>>();
+            }
         }
+    }
+
+    public void save() {
+        recordings.Add(commandProcessor.clear());
+        SaveSystem.savePlayerData(this);
     }
 
     public string getPlayerName() { 
@@ -80,5 +93,9 @@ public class Player : MonoBehaviour, IEntity {
                 highestLevelCompleted = levelManager.getCurrentLevel();
             }
         }
+    }
+
+    public List<List<Command>> getRecordings() {
+        return recordings;
     }
 }

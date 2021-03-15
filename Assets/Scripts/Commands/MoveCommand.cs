@@ -13,5 +13,9 @@ public class MoveCommand : Command {
     public override void Execute() {
         entity.transform.Translate(distance * direction);
     }
-    
+
+
+    public override string ToString() {
+        return "MoveCommand:" + direction.x + "," + direction.y + "," + distance;
+    }
 }

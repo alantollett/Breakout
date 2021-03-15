@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CommandProcessor : MonoBehaviour {
@@ -9,6 +8,12 @@ public class CommandProcessor : MonoBehaviour {
     public void Execute(Command c) {
         commands.Add(c);
         c.Execute();
+    }
+
+    public List<Command> clear() {
+        List<Command> tmp = commands;
+        commands = new List<Command>();
+        return tmp;
     }
 
 }
