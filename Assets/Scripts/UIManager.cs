@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Button[] levelButtons;
     [SerializeField] private Text livesText;
     [SerializeField] private Text scoreText;
+    [SerializeField] private GameObject recordingScrollBarContent;
+    [SerializeField] private GameObject recordingButtonPrefab;
 
     private Player player;
 
@@ -81,8 +83,9 @@ public class UIManager : MonoBehaviour {
             recordingsCanvas.gameObject.SetActive(true);
 
             if (player.getRecordings().Count > 0) {
-                foreach(Command c in player.getRecordings()[0]) {
-                    //Instantiate(recordingPrefab);
+                foreach(List<Command> recording in player.getRecordings()) {
+                    GameObject button = Instantiate(recordingButtonPrefab);
+                    button.transform.SetParent(recordingScrollBarContent.transform);
                 }
             }
         }
