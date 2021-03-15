@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(LevelManager))]
 public class UIManager : MonoBehaviour {
 
     [SerializeField] private Canvas userCanvas;
@@ -15,13 +16,19 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Dropdown existingUser;
     [SerializeField] private InputField newUser;
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private Button[] levelButtons;
     [SerializeField] private Text livesText;
     [SerializeField] private Text scoreText;
     [SerializeField] private GameObject recordingScrollBarContent;
     [SerializeField] private GameObject recordingButtonPrefab;
+    [SerializeField] private GameObject levelScrollBarContent;
+    [SerializeField] private GameObject levelButtonPrefab;
 
     private Player player;
+    private LevelManager levelManager;
+
+    public void Awake() {
+        levelManager = GetComponent<LevelManager>();
+    }
 
     public void Start() {
         disableAllMenus();
@@ -68,8 +75,23 @@ public class UIManager : MonoBehaviour {
             mainCanvas.gameObject.SetActive(true);
         } else if (menu.Equals("levels")) {
             levelsCanvas.gameObject.SetActive(true);
-            for (int i = 0; i < player.getHighestLevelCompleted() + 2; i++) {
-                levelButtons[i].GetComponentInChildren<Text>().color = new Color(0, 255, 0);
+
+            for(int i = 0; i < levelManager.getNumLevels(); i++) {
+                GameObject button = Instantiate(levelButtonPrefab);
+                button.transform.SetParent(levelScrollBarContent.transform);
+
+                Text text = button.GetComponentInChildren<Text>();
+                if(i == 0) {
+                    text.text = "TUTORIAL";
+                } else {
+                    text.text = "LEVEL " + i;
+                }
+
+                if (i < player.getHighestLevelCompleted() + 1) {
+                    text.color = new Color(0, 255, 0);
+                } else {
+                    text.color = new Color(255, 0, 0);
+                }
             }
         } else if (menu.Equals("game overlay")) {
             gameOverlayCanvas.gameObject.SetActive(true);

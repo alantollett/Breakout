@@ -3,7 +3,7 @@
 [RequireComponent(typeof(UIManager))]
 public class LevelManager : MonoBehaviour {
 
-    [SerializeField] private GameObject[] brickPrefabs;
+    [SerializeField] private GameObject[] levels;
     [SerializeField] private GameObject wallsPrefab;
     [SerializeField] private GameObject ballPrefab;
 
@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour {
 
         // load in the game objects
         walls = Instantiate(wallsPrefab);
-        bricks = Instantiate(brickPrefabs[level]);
+        bricks = Instantiate(levels[level]);
         ball = Instantiate(ballPrefab).GetComponent<Ball>();
         ball.gameObject.name = "ball";
     }
@@ -85,5 +85,9 @@ public class LevelManager : MonoBehaviour {
     public void quitLevel() {
         clearLevel();
         uiManager.openMenu("main");
+    }
+
+    public int getNumLevels() {
+        return levels.Length;
     }
 }
