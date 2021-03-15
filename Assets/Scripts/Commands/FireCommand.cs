@@ -5,7 +5,7 @@ public class FireCommand : Command {
     private float angle;
     private float speed;
 
-    public FireCommand(IEntity entity, float angle, float speed) : base(entity) {
+    public FireCommand(IEntity entity, float time, float angle, float speed) : base(entity, time) {
         this.angle = angle;
         this.speed = speed;
     }
@@ -15,6 +15,6 @@ public class FireCommand : Command {
     }
 
     public override string ToString() {
-        return "FireCommand:" + angle + "," + speed;
+        return "FireCommand:" + entity + "," + time + "," + angle + "," + speed;
     }
 }

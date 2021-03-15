@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
-[RequireComponent(typeof(UIManager))]
+//[RequireComponent(typeof(UIManager))]
 public class LevelManager : MonoBehaviour {
 
     [SerializeField] private GameObject[] levels;
     [SerializeField] private GameObject wallsPrefab;
     [SerializeField] private GameObject ballPrefab;
 
-    private UIManager uiManager;
+    //private UIManager uiManager;
 
     private Player player;
     private Ball ball;
@@ -15,9 +17,10 @@ public class LevelManager : MonoBehaviour {
     private GameObject walls;
 
     private int currentLevel;
+    private float startTime;
 
     public void Awake() {
-        uiManager = gameObject.GetComponent<UIManager>();
+        //uiManager = gameObject.GetComponent<UIManager>();
     }
 
     // 0 = tutorial, 1 = level 1, ...
@@ -25,7 +28,7 @@ public class LevelManager : MonoBehaviour {
         player = GameObject.Find("player").GetComponent<Player>();
 
         if (level > player.getHighestLevelCompleted() + 1) return;
-        uiManager.openMenu("game overlay");
+        //uiManager.openMenu("game overlay");
         clearLevel();
 
         // reset initial values
@@ -38,6 +41,23 @@ public class LevelManager : MonoBehaviour {
         bricks = Instantiate(levels[level]);
         ball = Instantiate(ballPrefab).GetComponent<Ball>();
         ball.gameObject.name = "ball";
+
+        startTime = Time.timeSinceLevelLoad;
+    }
+
+    public void loadRecording(List<Command> recording, int level) {
+        Debug.Log("LOADING RECORDING");
+        loadLevel(level);
+
+        startTime = Time.timeSinceLevelLoad;
+        while(recording.Count > 0) {
+            float currentTime = Time.timeSinceLevelLoad - startTime;
+
+            if (recording[0].getTime() >= currentTime) {
+                recording[0].Execute();
+                recording.Remove(recording[0]);
+            }
+        }
     }
 
     public void clearLevel() {
@@ -84,10 +104,18 @@ public class LevelManager : MonoBehaviour {
 
     public void quitLevel() {
         clearLevel();
-        uiManager.openMenu("main");
+        //uiManager.openMenu("main");
     }
 
     public int getNumLevels() {
         return levels.Length;
+    }
+
+    public float getStartTime() {
+        return startTime;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

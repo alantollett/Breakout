@@ -54,15 +54,25 @@ public class PlayerData {
                 string[] parts = line.Split(':');
                 string[] components = parts[1].Split(',');
 
+                string entityName = components[0].Split(' ')[0];
+                IEntity entity = null;
+                if (entityName.Equals("Player")) {
+                    entity = GameObject.Find(entityName).GetComponent<Player>();
+                }else if (entityName.Equals("Ball")) {
+                    //entity = GameObject.Find(entityName).GetComponent<Ball>();
+                }
+                 
+                float time = float.Parse(components[1]);
+
                 if (parts[0].Equals("MoveCommand")) {
-                    float x = float.Parse(components[0]);
-                    float y = float.Parse(components[1]);
-                    float speed = float.Parse(components[2]);
-                    currentRecording.Add(new MoveCommand(player, new Vector2(x, y), speed));
+                    float x = float.Parse(components[2]);
+                    float y = float.Parse(components[3]);
+                    float speed = float.Parse(components[4]);
+                    currentRecording.Add(new MoveCommand(entity, time, new Vector2(x, y), speed));
                 }else if (parts[0].Equals("FireCommand")) {
-                    float angle = float.Parse(components[0]);
-                    float speed = float.Parse(components[1]);
-                    currentRecording.Add(new FireCommand(player, angle, speed));
+                    float angle = float.Parse(components[2]);
+                    float speed = float.Parse(components[3]);
+                    //currentRecording.Add(new FireCommand(entity, time, angle, speed));
                 }
             }
         }

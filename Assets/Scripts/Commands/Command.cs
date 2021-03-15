@@ -5,10 +5,12 @@ public abstract class Command {
     protected IEntity entity;
     protected float time;
 
-    public Command(IEntity entity) {
+    public Command(IEntity entity, float time) {
         this.entity = entity;
-        time = Time.timeSinceLevelLoad;
+        this.time = time;
     }
+
+    public float getTime() { return time; }
 
     public abstract void Execute();
 
