@@ -22,6 +22,7 @@ public class InputManager : MonoBehaviour {
         player = GetComponent<Player>();
         commandProcessor = GetComponent<CommandProcessor>();
         levelManager = GameObject.Find("Game Manager").GetComponent<LevelManager>();
+        ball = GameObject.Find("Game Manager").GetComponent<EntityManager>().getBall();
     }
 
     public void Start() {
@@ -55,8 +56,6 @@ public class InputManager : MonoBehaviour {
         }
     }
     public void Fire(InputAction.CallbackContext context) {
-        ball = GameObject.Find("ball").GetComponent<Ball>();
-
         if (context.started && !ball.isMoving()) {
             // fire the ball at an angle between 20 and 160 degrees to ensure that it
             // does not start off going too horizontal or even below the paddle...

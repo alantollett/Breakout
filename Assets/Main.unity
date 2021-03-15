@@ -2055,7 +2055,7 @@ PrefabInstance:
     - target: {fileID: 2244827163812820503, guid: 0ea0f0921990a6c44b5e41545a817bd6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2244827163812820503, guid: 0ea0f0921990a6c44b5e41545a817bd6,
         type: 3}
@@ -2374,7 +2374,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1908018702}
+      objectReference: {fileID: 1908018699}
     - target: {fileID: 3590866291091444647, guid: 7b32eb76b5081ba499f523a4d73e6201,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -2860,6 +2860,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137233818}
   m_CullTransparentMesh: 0
+--- !u!1001 &1146927482
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8937282822043886689, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_Name
+      value: Walls
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937282822043886694, guid: 19a09650e90f0ab448dabf014a719aa9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19a09650e90f0ab448dabf014a719aa9, type: 3}
 --- !u!1 &1188940853
 GameObject:
   m_ObjectHideFlags: 0
@@ -4390,7 +4459,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1908018703}
+      - m_Target: {fileID: 1908018702}
         m_MethodName: login
         m_Mode: 6
         m_Arguments:
@@ -4619,7 +4688,7 @@ GameObject:
   - component: {fileID: 1827295906}
   - component: {fileID: 1827295905}
   m_Layer: 5
-  m_Name: Game Overlay Canvas
+  m_Name: Game Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4946,7 +5015,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1908018703}
+      - m_Target: {fileID: 1908018702}
         m_MethodName: login
         m_Mode: 6
         m_Arguments:
@@ -5083,11 +5152,12 @@ GameObject:
   - component: {fileID: 1908018700}
   - component: {fileID: 1908018701}
   - component: {fileID: 1908018704}
-  - component: {fileID: 1908018703}
+  - component: {fileID: 1908018698}
   - component: {fileID: 1908018702}
   - component: {fileID: 1908018699}
   - component: {fileID: 1908018705}
-  - component: {fileID: 1908018698}
+  - component: {fileID: 1908018703}
+  - component: {fileID: 1908018706}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -5124,13 +5194,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1908018697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 338157fb71dae094496d4b17ffc447f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b2ae8247bc64884a9f271ae303b05f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1641698503}
-  levelScrollBarContent: {fileID: 1944179617}
-  levelButtonPrefab: {fileID: 6164169991655528694, guid: 0dab8c18fbd11094aae2e4654f8cb1a3,
-    type: 3}
+  canvas: {fileID: 34465401}
 --- !u!4 &1908018700
 Transform:
   m_ObjectHideFlags: 0
@@ -5168,10 +5235,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1908018697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d71d1930157dd0429b85edefe8acba1, type: 3}
+  m_Script: {fileID: 11500000, guid: b83120f18fd5eab439c5a69d65bb07aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 34465401}
+  canvas: {fileID: 390522476}
+  existingUser: {fileID: 1600494882}
+  newUser: {fileID: 633912298}
 --- !u!114 &1908018703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5181,12 +5250,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1908018697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea12ed6d91f373343a93bc6633884928, type: 3}
+  m_Script: {fileID: 11500000, guid: 8de8071c343764247900f6f07a7a493c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 390522476}
-  existingUser: {fileID: 1600494882}
-  newUser: {fileID: 633912298}
+  canvas: {fileID: 2125763486}
+  recordingScrollBarContent: {fileID: 1712166860}
+  recordingButtonPrefab: {fileID: 940467122224978146, guid: e0ce9b418ee2f6e419fb2815583b5cb2,
+    type: 3}
 --- !u!114 &1908018704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5208,13 +5278,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1908018697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3612cee0ccd391b42b50d2bad81ceac5, type: 3}
+  m_Script: {fileID: 11500000, guid: 744a41368301aac49a33f50fc99c5693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 2125763486}
-  recordingScrollBarContent: {fileID: 1712166860}
-  recordingButtonPrefab: {fileID: 940467122224978146, guid: e0ce9b418ee2f6e419fb2815583b5cb2,
+  canvas: {fileID: 1641698503}
+  levelScrollBarContent: {fileID: 1944179617}
+  levelButtonPrefab: {fileID: 6164169991655528694, guid: 0dab8c18fbd11094aae2e4654f8cb1a3,
     type: 3}
+--- !u!114 &1908018706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908018697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598a8d686d0a98241b2e116f189cbfca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1827295907}
+  livesText: {fileID: 1046503977}
+  scoreText: {fileID: 205011770}
 --- !u!1 &1939670020
 GameObject:
   m_ObjectHideFlags: 0
@@ -5588,7 +5673,7 @@ PrefabInstance:
     - target: {fileID: 2538062326284927207, guid: 6f55b55e2ed19f34e96a6a8c9ad54059,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2538062326284927207, guid: 6f55b55e2ed19f34e96a6a8c9ad54059,
         type: 3}
@@ -6123,7 +6208,7 @@ RectTransform:
   - {fileID: 484859400}
   - {fileID: 450981259}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

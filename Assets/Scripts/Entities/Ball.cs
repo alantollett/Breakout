@@ -11,20 +11,19 @@ public class Ball : MonoBehaviour, IEntity {
     private Rigidbody2D rb;
     private bool moving;
 
-    // Needed as implements IEntity
     Rigidbody2D IEntity.rb => rb;
 
     // cache resources
     public void Awake() {
         rb = GetComponent<Rigidbody2D>();
-        //player = GameObject.Find("player").GetComponent<Player>();
+        player = GameObject.Find("Game Manager").GetComponent<EntityManager>().getPlayer();
     }
 
     // deal with movement
     public void Update() {
         if (!moving) {
             // stick the ball to the player paddle
-            //transform.position = new Vector2(player.transform.position.x, player.transform.position.y + 0.4f);
+            transform.position = new Vector2(player.transform.position.x, player.transform.position.y + 0.4f);
         } else {
             // Enforce that the ball's speed is constant
             if (rb.velocity.magnitude != movementSpeed) rb.velocity = rb.velocity * movementSpeed;

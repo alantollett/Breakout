@@ -2,33 +2,37 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//[RequireComponent(typeof(UIManager))]
+[RequireComponent(typeof(MenuManager))]
 public class LevelManager : MonoBehaviour {
 
     [SerializeField] private GameObject[] levels;
     [SerializeField] private GameObject wallsPrefab;
     [SerializeField] private GameObject ballPrefab;
 
-    //private UIManager uiManager;
-
+    private MenuManager menuManager;
+    private EntityManager entityManager;
     private Player player;
     private Ball ball;
     private GameObject bricks;
-    private GameObject walls;
 
     private int currentLevel;
     private float startTime;
 
     public void Awake() {
-        //uiManager = gameObject.GetComponent<UIManager>();
+        entityManager = GetComponent<EntityManager>();
+        menuManager = gameObject.GetComponent<MenuManager>();
+
+        player = entityManager.getPlayer();
+        ball = entityManager.getBall();
     }
 
-    // 0 = tutorial, 1 = level 1, ...
     public void loadLevel(int level) {
-        player = GameObject.Find("player").GetComponent<Player>();
-
         if (level > player.getHighestLevelCompleted() + 1) return;
-        //uiManager.openMenu("game overlay");
+
+        // turn on overlay
+        menuManager.openMenu(4);
+
+        // remove the existing levels bricks and reset ball and player position
         clearLevel();
 
         // reset initial values
@@ -36,11 +40,8 @@ public class LevelManager : MonoBehaviour {
         player.setLives(3);
         player.setScore(0);
 
-        // load in the game objects
-        walls = Instantiate(wallsPrefab);
+        // load in the new bricks
         bricks = Instantiate(levels[level]);
-        ball = Instantiate(ballPrefab).GetComponent<Ball>();
-        ball.gameObject.name = "ball";
 
         startTime = Time.timeSinceLevelLoad;
     }
@@ -61,26 +62,15 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void clearLevel() {
-        // remove the ball
-        if (ball != null) {
-            Destroy(ball.gameObject);
-            ball = null;
-        }
-
         // remove the bricks
         if (bricks != null) {
             Destroy(bricks);
             bricks = null;
         }
 
-        // remove the walls
-        if (walls != null) {
-            Destroy(walls);
-            walls = null;
-        }
-
-        // reset the player location
+        // reset the player and ball location
         player.gameObject.transform.position = new Vector2(0, player.gameObject.transform.position.y);
+        ball.gameObject.transform.position = new Vector2(0, player.gameObject.transform.position.y + 0.4f);
     }
 
     public int getRemainingBricks() {
@@ -104,7 +94,7 @@ public class LevelManager : MonoBehaviour {
 
     public void quitLevel() {
         clearLevel();
-        //uiManager.openMenu("main");
+        menuManager.openMenu(1);
     }
 
     public int getNumLevels() {

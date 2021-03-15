@@ -27,17 +27,17 @@ public class UserMenu : IMenuManager {
     }
 
     public void login(bool isNewUser) {
-        if(isNewUser && newUser.text != null) {
+        if (isNewUser && newUser.text != null) {
             entityManager.getPlayer().load(newUser.text.ToLower(), true);
             menuManager.openMenu(1); // should be main menu
-        }else if(!isNewUser && existingUser.value != 0) {
+        } else if (!isNewUser && existingUser.value != 0) {
             entityManager.getPlayer().load(existingUser.options[existingUser.value].text.ToLower(), false);
             menuManager.openMenu(1); // should be main menu
         }
     }
 
     private void loadDropdown() {
-        if(existingUser == null) {
+        if (existingUser == null) {
             Debug.Log("Existing user dropdown not set...");
         } else {
             string path = Application.persistentDataPath + "/";

@@ -30,8 +30,7 @@ public class MenuManager : MonoBehaviour {
     [SerializeField] private Canvas gameOverlayCanvas;
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject losePanel;
-    [SerializeField] private Text livesText;
-    [SerializeField] private Text scoreText;
+
 
 
     private Player player;
