@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CommandProcessor))]
 public class Player : MonoBehaviour, IEntity {
-    //private UIManager uiManager;
+    private MenuManager menuManager;
     private LevelManager levelManager;
     private CommandProcessor commandProcessor;
 
@@ -17,7 +17,7 @@ public class Player : MonoBehaviour, IEntity {
     Rigidbody2D IEntity.rb => null;
 
     public void Awake() {
-        //uiManager = GameObject.Find("Game Manager").GetComponent<UIManager>();
+        menuManager = GameObject.Find("Game Manager").GetComponent<MenuManager>();
         levelManager = GameObject.Find("Game Manager").GetComponent<LevelManager>();
         commandProcessor = GetComponent<CommandProcessor>();
     }
@@ -54,8 +54,12 @@ public class Player : MonoBehaviour, IEntity {
     }
 
     public void save() {
-        recordings.Add(commandProcessor.clear());
         SaveSystem.savePlayerData(this);
+    }
+
+    public void saveRecording() {
+        recordings.Add(commandProcessor.clear());
+        save();
     }
 
     public string getPlayerName() { 
@@ -82,7 +86,7 @@ public class Player : MonoBehaviour, IEntity {
         this.lives = lives;
 
         if (lives == 0) {
-            //uiManager.openMenu("lose");
+            menuManager.openMenu(5);
         }
     }
 
@@ -94,7 +98,7 @@ public class Player : MonoBehaviour, IEntity {
         this.score = score;
 
         if(levelManager.getRemainingBricks() == 0) {
-            //uiManager.openMenu("win");
+            menuManager.openMenu(6);
             
             if(levelManager.getCurrentLevel() > highestLevelCompleted) {
                 highestLevelCompleted = levelManager.getCurrentLevel();

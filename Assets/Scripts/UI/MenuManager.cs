@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour {
     public void openMenu(int index) {
         for (int i = 0; i < menus.Length; i++) menus[i].disable();
         menus[index].enable();
+        Debug.Log(index);
     }
 }
 
