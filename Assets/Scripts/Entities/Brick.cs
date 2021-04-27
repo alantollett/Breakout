@@ -7,15 +7,15 @@ public class Brick : MonoBehaviour {
 
     [SerializeField] private int maxHealth = 1;
     [SerializeField] private Sprite[] sprites = new Sprite[3];
+    private LevelManager levelManager;
 
     private int health;
     private SpriteRenderer spriteRenderer;
-    private Player player;
 
     // cache resources
     public void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        player = GameObject.Find("Game Manager").GetComponent<EntityManager>().getPlayer();
+        levelManager = GameObject.Find("GameManager").GetComponent<LevelManager>();
     }
 
     // initialise values
@@ -28,7 +28,7 @@ public class Brick : MonoBehaviour {
         health -= 1;
 
         if (health <= 0) {
-            player.setScore(player.getScore() + 1);
+            levelManager.getPlayer().setScore(levelManager.getPlayer().getScore() + 1);
             Destroy(this.gameObject);
         } else {
             // change to third broken / two thirds broken / ... sprites.

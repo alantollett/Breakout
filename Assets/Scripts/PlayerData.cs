@@ -6,14 +6,14 @@ public class PlayerData {
 
     [SerializeField] private string name;
     [SerializeField] private int highestLevelCompleted;
-    //[SerializeField] private Dictionary<int, int> highScores;
+    [SerializeField] private int paddleId;
     [SerializeField] private string recordings;
 
 
     public PlayerData(Player player) {
         name = player.getPlayerName();
         highestLevelCompleted = player.getHighestLevelCompleted();
-        //highScores = player.getHighScores();
+        paddleId = player.getPaddleId();
         recordings = recordingsToString(player.getRecordings());
     }
 
@@ -36,7 +36,7 @@ public class PlayerData {
     }
 
     public int getHighestLevelCompleted() { return highestLevelCompleted; }
-    //public Dictionary<int, int> getHighScores() { return highScores; }
+    public int getPaddleId() { return paddleId; }
 
     public List<List<Command>> getRecordings(IEntity player) {
         List<List<Command>> recordingsArr = new List<List<Command>>();

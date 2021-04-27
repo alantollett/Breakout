@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/*
+
 [RequireComponent(typeof(LevelManager))]
 [RequireComponent(typeof(EntityManager))]
 public class RecordingsMenu : IMenuManager {
@@ -43,3 +45,5 @@ public class RecordingsMenu : IMenuManager {
     }
 
 }
+
+*/

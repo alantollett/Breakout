@@ -1,56 +1,88 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CommandProcessor))]
 public class Player : MonoBehaviour, IEntity {
-    private MenuManager menuManager;
-    private LevelManager levelManager;
+
     private CommandProcessor commandProcessor;
+    private LevelManager levelManager;
+    private MenuManager menuManager;
 
     private string playerName;
     private int highestLevelCompleted;
+    private int paddleId;
     private List<List<Command>> recordings;
-    private Dictionary<int, int> highScores;
-    private int lives;
-    private int score;
+    private int lives = 3;
+    private int score = 0;
+
+
+    [SerializeField] private float movementSpeed = 10f;
+    [SerializeField] private float paddleXBound = 7.2f;
+
+    private Vector2 currentMove;
+    private bool moving;
+
+    private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite[] paddles = new Sprite[5];
 
     Rigidbody2D IEntity.rb => null;
 
     public void Awake() {
-        menuManager = GameObject.Find("Game Manager").GetComponent<MenuManager>();
-        levelManager = GameObject.Find("Game Manager").GetComponent<LevelManager>();
         commandProcessor = GetComponent<CommandProcessor>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        levelManager = GameObject.Find("GameManager").GetComponent<LevelManager>();
+        menuManager = GameObject.Find("GameManager").GetComponent<MenuManager>();
     }
 
-    public void load(string name, bool isNewPlayer) {
-        playerName = name;
+    public void Start() {
+        currentMove = Vector2.zero;
+        moving = false;
+    }
 
-        if (isNewPlayer) {
-            // if new player then set data values to defaults
-            highestLevelCompleted = 0;
-            recordings = new List<List<Command>>();
-            highScores = new Dictionary<int, int>();
 
-            // and then save the new player to disk
-            SaveSystem.savePlayerData(this);
-        } else {
-            // otherwise laod the player data from disk
-            PlayerData data = SaveSystem.loadPlayerData(playerName);
-            highestLevelCompleted = data.getHighestLevelCompleted();
-            //highScores = data.getHighScores();
-            recordings = data.getRecordings(this);
+    public void Update() {
+        // update paddle's position
+        if (moving && !levelManager.isPaused()) {
+            int frame = levelManager.getFrame();
+            commandProcessor.Execute(new MoveCommand(this, frame, currentMove, movementSpeed * Time.deltaTime));
 
-            if(recordings == null) {
-                recordings = new List<List<Command>>();
+            // ensure that paddle is within bounds of the screen via code (not using RBs - read notes)
+            if (transform.position.x >= paddleXBound) {
+                transform.position = new Vector2(paddleXBound, transform.position.y);
+            } else if (transform.position.x <= -paddleXBound) {
+                transform.position = new Vector2(-paddleXBound, transform.position.y);
             }
         }
     }
 
-    public void unLoad() {
-        playerName = "";
+    public void move(InputAction.CallbackContext context) {
+        currentMove = context.ReadValue<Vector2>();
+        currentMove.y = 0;
+
+        if (context.started && !levelManager.isPaused()) {
+            moving = true;
+        } else if (context.canceled) {
+            currentMove = Vector2.zero;
+            moving = false;
+        }
+    }
+
+    public void loadNew(string playerName, int paddleId) {
+        this.playerName = playerName;
+        this.paddleId = paddleId;
         highestLevelCompleted = 0;
-        recordings = null;
-        highScores = null;
+        recordings = new List<List<Command>>();
+    }
+
+    public void loadOld(string playerName) {
+        PlayerData data = SaveSystem.loadPlayerData(playerName);
+        highestLevelCompleted = data.getHighestLevelCompleted();
+        paddleId = data.getPaddleId();
+        spriteRenderer.sprite = paddles[paddleId];
+
+        recordings = data.getRecordings(this);
+        if(recordings == null) recordings = new List<List<Command>>();
     }
 
     public void save() {
@@ -62,8 +94,11 @@ public class Player : MonoBehaviour, IEntity {
         save();
     }
 
-    public string getPlayerName() { 
-        return playerName; 
+    public string getPlayerName() {
+        return playerName;
+    }
+    public void setPlayerName(string playerName) {
+        this.playerName = playerName;
     }
 
     public int getHighestLevelCompleted() { 
@@ -72,10 +107,15 @@ public class Player : MonoBehaviour, IEntity {
 
     public void setHighestLevelCompleted(int level) {
         highestLevelCompleted = level;
+        save();
     }
 
-    public Dictionary<int, int> getHighScores() { 
-        return highScores; 
+    public void setPaddleId(int paddleId) {
+        this.paddleId = paddleId;
+    }
+
+    public int getPaddleId() {
+        return paddleId;
     }
 
     public int getLives() { 
@@ -86,7 +126,8 @@ public class Player : MonoBehaviour, IEntity {
         this.lives = lives;
 
         if (lives == 0) {
-            menuManager.openMenu(5);
+            levelManager.pause();
+            menuManager.setLoseMenuVisible(true);
         }
     }
 
@@ -97,11 +138,13 @@ public class Player : MonoBehaviour, IEntity {
     public void setScore(int score) { 
         this.score = score;
 
-        if(levelManager.getRemainingBricks() == 0) {
-            menuManager.openMenu(6);
-            
-            if(levelManager.getCurrentLevel() > highestLevelCompleted) {
-                highestLevelCompleted = levelManager.getCurrentLevel();
+        if (levelManager.getNumberOfBricks() == score) {
+            levelManager.pause();
+            menuManager.setWinMenuVisible(true);
+
+            if (levelManager.getLevel() > highestLevelCompleted) {
+                highestLevelCompleted = levelManager.getLevel() + 1;
+                save();
             }
         }
     }

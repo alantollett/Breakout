@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2538062326284927207}
   - component: {fileID: 2538062326284927206}
-  - component: {fileID: 2538062326284927201}
   - component: {fileID: 8381099553779623493}
   - component: {fileID: 6853521164497058761}
   - component: {fileID: 1124813700704055713}
   - component: {fileID: 6312885691785932959}
+  - component: {fileID: 8663168019529920817}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -86,32 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2538062326284927201
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2538062326284927200}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.04, y: 0.24}
-    newSize: {x: 1.04, y: 0.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.04, y: 0.24}
-  m_EdgeRadius: 0
 --- !u!114 &8381099553779623493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,6 +98,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2844a6dc007282848b394541b4dde61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementSpeed: 10
+  paddleXBound: 7.2
+  paddles:
+  - {fileID: 21300000, guid: 17f0a36c705c044d2adb88c5ef73efbc, type: 3}
+  - {fileID: 21300000, guid: 8390793b679636347b8faabc1bb40fc5, type: 3}
+  - {fileID: 21300000, guid: ef285c685e401214389403bc9db59164, type: 3}
+  - {fileID: 21300000, guid: 9c5afb85ea4fe5d41859d405c92f360b, type: 3}
+  - {fileID: 21300000, guid: 1cb12e9d3448ceb4796b7d5dd742493c, type: 3}
 --- !u!114 &6853521164497058761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +202,21 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0534a2e8-1d83-4bfe-90ea-da947c15cdb5
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6312885691785932959}
+        m_MethodName: Pause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c1129cfb-d68d-4b90-b8ac-4dbc430f64c4
+    m_ActionName: Player/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -249,5 +246,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8e3383ac391b9408f60a81e8fd05e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
-  paddleXBound: 7.2
+--- !u!60 &8663168019529920817
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2538062326284927200}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.5, y: 0.3}
+    newSize: {x: 1.04, y: 0.24}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.29354632, y: 0.14346366}
+      - {x: -0.748435, y: -0.029671898}
+      - {x: -0.7453048, y: -0.08027143}
+      - {x: -0.46402523, y: -0.145306}
+      - {x: 0.5019314, y: -0.14843532}
+      - {x: 0.7453048, y: -0.07306015}
+      - {x: 0.7436592, y: -0.029400315}
+      - {x: 0.26410833, y: 0.14406306}
