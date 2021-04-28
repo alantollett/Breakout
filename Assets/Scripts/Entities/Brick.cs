@@ -7,7 +7,7 @@ public class Brick : MonoBehaviour {
 
     [SerializeField] private int maxHealth = 1;
     [SerializeField] private Sprite[] sprites = new Sprite[3];
-    private LevelManager levelManager;
+    [SerializeField] private LevelManager levelManager;
 
     private int health;
     private SpriteRenderer spriteRenderer;
@@ -15,7 +15,6 @@ public class Brick : MonoBehaviour {
     // cache resources
     public void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        levelManager = GameObject.Find("GameManager").GetComponent<LevelManager>();
     }
 
     // initialise values

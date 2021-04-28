@@ -11,6 +11,7 @@ public class FireCommand : Command {
     }
 
     public override void Execute() {
+        entity.transform.parent = null;
         entity.rb.velocity = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)) * speed;
     }
 

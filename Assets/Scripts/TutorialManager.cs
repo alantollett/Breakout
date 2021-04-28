@@ -6,11 +6,10 @@ public class TutorialManager : MonoBehaviour {
 
     [SerializeField] private GameObject[] messages;
     private int currentMessage = 0;
-    private LevelManager levelManager;
 
     private void Awake() {
-        levelManager = GetComponent<LevelManager>();
-        StartCoroutine(displayMessage(1, 4));
+        // show aim message for 5s then move to movement message
+        StartCoroutine(displayMessage(1, 5));
     }
 
     private void Update() {
@@ -30,15 +29,12 @@ public class TutorialManager : MonoBehaviour {
         // otherwise, update the message if the message requested
         // is furhter in the tutorial than the current message...
         if (index > currentMessage) {
-            // display the message with a 3s delay
-            StartCoroutine(displayMessage(index, 3));
+            // display the message after a 2s delay
+            StartCoroutine(displayMessage(index, 2));
 
-            // if the final input message is requested,
-            // display the "continue playing" message after a delay
-            // and then remove all messages after a further delay
             if (index == 3) {
-                StartCoroutine(displayMessage(4, 6));
-                StartCoroutine(displayMessage(-1, 11));
+                // if final message, after 10s remove all messages
+                StartCoroutine(displayMessage(-1, 10));
             }
         }
     }

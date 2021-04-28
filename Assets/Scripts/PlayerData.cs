@@ -8,6 +8,7 @@ public class PlayerData {
     [SerializeField] private int highestLevelCompleted;
     [SerializeField] private int paddleId;
     [SerializeField] private string recordings;
+    [SerializeField] private List<string> recordingNames;
 
 
     public PlayerData(Player player) {
@@ -15,6 +16,7 @@ public class PlayerData {
         highestLevelCompleted = player.getHighestLevelCompleted();
         paddleId = player.getPaddleId();
         recordings = recordingsToString(player.getRecordings());
+        recordingNames = player.getRecordingNames();
     }
 
     private string recordingsToString(List<List<Command>> recordings) {
@@ -38,7 +40,7 @@ public class PlayerData {
     public int getHighestLevelCompleted() { return highestLevelCompleted; }
     public int getPaddleId() { return paddleId; }
 
-    public List<List<Command>> getRecordings(IEntity player) {
+    public List<List<Command>> getRecordings() {
         List<List<Command>> recordingsArr = new List<List<Command>>();
 
         if (recordings == null || recordings.Length == 0) return recordingsArr;
@@ -58,7 +60,7 @@ public class PlayerData {
                 IEntity entity = null;
                 if (entityName.Equals("Player")) {
                     entity = GameObject.Find(entityName).GetComponent<Player>();
-                }else if (entityName.Equals("Ball")) {
+                }else if (entityName.Equals("Ball(Clone)")) {
                     entity = GameObject.Find(entityName).GetComponent<Ball>();
                 }
                  
@@ -78,6 +80,10 @@ public class PlayerData {
         }
 
         return recordingsArr; 
+    }
+
+    public List<string> getRecordingNames() {
+        return recordingNames;
     }
 
 }

@@ -3,24 +3,24 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CommandProcessor))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class Player : MonoBehaviour, IEntity {
 
-    [SerializeField] private float movementSpeed = 10f;
-    [SerializeField] private float paddleXBound = 7.2f;
     [SerializeField] private Sprite[] paddles = new Sprite[5];
+    [SerializeField] private LevelManager levelManager;
+    [SerializeField] private MenuManager menuManager;
+    [SerializeField] private GameObject ballPrefab;
 
-    private CommandProcessor commandProcessor;
-    private LevelManager levelManager;
-    private MenuManager menuManager;
     private SpriteRenderer spriteRenderer;
+    private CommandProcessor commandProcessor;
+    private Ball ball;
 
     private string playerName;
     private int highestLevelCompleted;
     private int paddleId;
     private List<List<Command>> recordings;
+    private List<string> recordingNames;
 
-    private Vector2 currentMove;
-    private bool moving;
     private int lives = 3;
     private int score = 0;
 
@@ -28,43 +28,9 @@ public class Player : MonoBehaviour, IEntity {
     Rigidbody2D IEntity.rb => null;
 
     public void Awake() {
-        commandProcessor = GetComponent<CommandProcessor>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        levelManager = GameObject.Find("GameManager").GetComponent<LevelManager>();
-        menuManager = GameObject.Find("GameManager").GetComponent<MenuManager>();
-    }
-
-    public void Start() {
-        currentMove = Vector2.zero;
-        moving = false;
-    }
-
-
-    public void Update() {
-        // update paddle's position
-        if (moving && !levelManager.isPaused()) {
-            int frame = levelManager.getFrame();
-            commandProcessor.Execute(new MoveCommand(this, frame, currentMove, movementSpeed * Time.deltaTime));
-
-            // ensure that paddle is within bounds of the screen via code (not using RBs - read notes)
-            if (transform.position.x >= paddleXBound) {
-                transform.position = new Vector2(paddleXBound, transform.position.y);
-            } else if (transform.position.x <= -paddleXBound) {
-                transform.position = new Vector2(-paddleXBound, transform.position.y);
-            }
-        }
-    }
-
-    public void move(InputAction.CallbackContext context) {
-        currentMove = context.ReadValue<Vector2>();
-        currentMove.y = 0;
-
-        if (context.started && !levelManager.isPaused()) {
-            moving = true;
-        } else if (context.canceled) {
-            currentMove = Vector2.zero;
-            moving = false;
-        }
+        commandProcessor = GetComponent<CommandProcessor>();
+        addBall();
     }
 
     public void loadNew(string playerName, int paddleId) {
@@ -72,19 +38,33 @@ public class Player : MonoBehaviour, IEntity {
         this.paddleId = paddleId;
         highestLevelCompleted = 0;
         recordings = new List<List<Command>>();
+        recordingNames = new List<string>();
     }
 
     public void loadOld(string playerName) {
+        this.playerName = playerName;
+
         PlayerData data = SaveSystem.loadPlayerData(playerName);
         highestLevelCompleted = data.getHighestLevelCompleted();
         paddleId = data.getPaddleId();
         spriteRenderer.sprite = paddles[paddleId];
 
-        recordings = data.getRecordings(this);
-        if(recordings == null) recordings = new List<List<Command>>();
+        recordingNames = data.getRecordingNames();
+        if (recordingNames == null) {
+            recordingNames = new List<string>();
+        }
+    }
+
+    private void addBall() {
+        // add a ball to the scene
+        ball = Instantiate(ballPrefab).GetComponent<Ball>();
+        ball.transform.position = new Vector3(transform.position.x, -3.55f, 0);
+        ball.transform.parent = this.transform;
+        ball.setPlayer(this);
     }
 
     public void save() {
+        Debug.Log(playerName);
         SaveSystem.savePlayerData(this);
     }
 
@@ -97,6 +77,10 @@ public class Player : MonoBehaviour, IEntity {
 
     public int getHighestLevelCompleted() { 
         return highestLevelCompleted;
+    }
+
+    public List<string> getRecordingNames() {
+        return recordingNames;
     }
 
     public void setHighestLevelCompleted(int level) {
@@ -122,6 +106,8 @@ public class Player : MonoBehaviour, IEntity {
         if (lives == 0) {
             levelManager.pause();
             menuManager.setLoseMenuVisible(true);
+        } else {
+            addBall();
         }
     }
 
@@ -136,11 +122,15 @@ public class Player : MonoBehaviour, IEntity {
             levelManager.pause();
             menuManager.setWinMenuVisible(true);
 
-            if (levelManager.getLevel() > highestLevelCompleted) {
-                highestLevelCompleted = levelManager.getLevel() + 1;
+            if(StaticData.replayName == null) {
+                if (recordings == null) loadRecordings();
                 recordings.Add(commandProcessor.getCommands());
+                recordingNames.Add("Level " + levelManager.getLevel() + " " + System.DateTime.Now.ToString("d/MMM hh:mm"));
                 save();
-                Debug.Log(recordings.Count);
+            }
+
+            if (levelManager.getLevel() > highestLevelCompleted) {
+                highestLevelCompleted = levelManager.getLevel();
             }
         }
     }
@@ -149,5 +139,12 @@ public class Player : MonoBehaviour, IEntity {
         return recordings;
     }
 
+    public void loadRecordings() {
+        PlayerData data = SaveSystem.loadPlayerData(playerName);
+        recordings = data.getRecordings();
+    }
 
+    public Ball GetBall() {
+        return ball;
+    }
 }

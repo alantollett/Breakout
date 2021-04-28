@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(TransitionManager))]
 public class ExistingUserMenu : MonoBehaviour {
 
+    [SerializeField] private TransitionManager transitionManager;
     [SerializeField] private GameObject scrollViewContent;
     [SerializeField] private GameObject playerButtonPrefab;
     [SerializeField] private Sprite[] paddles = new Sprite[5];
     [SerializeField] private GameObject playerPrefab;
 
-    private TransitionManager transitionManager;
-
     public void Awake() {
-        transitionManager = GetComponent<TransitionManager>();
         loadUserButtons();
     }
 
@@ -51,8 +48,9 @@ public class ExistingUserMenu : MonoBehaviour {
             // destroy the player game object as no longer needed
             Destroy(go);
 
-            // add a click listener
+            // add click listeners
             button.GetComponent<Button>().onClick.AddListener(() => login(playerName));
+            button.GetComponent<Button>().onClick.AddListener(() => transitionManager.LoadScene("Game Menu"));
         }
     }
 
@@ -60,8 +58,5 @@ public class ExistingUserMenu : MonoBehaviour {
         // provide a static point of access to the selected player
         // as we need a way for the new scene to access the data
         StaticData.playerName = playerName;
-
-        // load the game menu scene
-        transitionManager.GetComponent<TransitionManager>().LoadScene(3);
     }
 }

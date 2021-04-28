@@ -4,6 +4,6 @@ using UnityEngine;
 
 public static class StaticData {
 
-    public static string playerName = "777";
-
+    public static string playerName = "Test";
+    public static string replayName = null;
 }

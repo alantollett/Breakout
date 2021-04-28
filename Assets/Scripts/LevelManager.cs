@@ -2,22 +2,25 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(MenuManager))]
 public class LevelManager : MonoBehaviour {
 
+    [SerializeField] private Player player;
+    [SerializeField] private Ball ball;
     [SerializeField] private int level;
     [SerializeField] private int numberOfBricks;
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private GameObject ballPrefab;
 
-    private Player player;
-    private Ball ball;
     private bool paused;
     private int frame;
+    private List<Command> recording;
     
     private void Awake() {
-        LoadPlayer();
-        LoadBall();
+        player.loadOld(StaticData.playerName);
+
+        if (StaticData.replayName != null) {
+            player.loadRecordings();
+            int recordingIndex = player.getRecordingNames().IndexOf(StaticData.replayName);
+            recording = player.getRecordings()[recordingIndex];
+        }
     }
 
     private void Start() {
@@ -28,22 +31,18 @@ public class LevelManager : MonoBehaviour {
         if(!paused) frame++;
     }
 
-    private void LoadPlayer() {
-        // add the player to the scene
-        GameObject go = Instantiate(playerPrefab);
-        player = go.GetComponent<Player>();
-        player.loadOld(StaticData.playerName);
-    }
-
-    private void LoadBall() {
-        // add the ball to the scene
-        GameObject go = Instantiate(ballPrefab);
-        ball = go.GetComponent<Ball>();
+    private void Update() {
+        if (StaticData.replayName != null && recording.Count > 0) {
+            while (recording.Count > 0 && frame >= recording[0].getFrame()) {
+                recording[0].Execute();
+                recording.Remove(recording[0]);
+            }
+            StaticData.replayName = null;
+        }
     }
 
     public void pause() {
         paused = true;
-        ball.pause();
     }
 
     public void resume() {

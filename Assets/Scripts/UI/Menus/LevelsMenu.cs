@@ -1,29 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(TransitionManager))]
 public class LevelsMenu : MonoBehaviour {
 
-    [SerializeField] private int numMenus;
+    [SerializeField] private TransitionManager transitionManager;
     [SerializeField] private int numLevels;
     [SerializeField] private GameObject scrollViewContent;
-    [SerializeField] private GameObject levelButtonPrefab;
+    [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private GameObject playerPrefab;
 
-    private TransitionManager transitionManager;
 
     public void Awake() {
-        transitionManager = GetComponent<TransitionManager>();
         loadLevelButtons();
     }
 
     private void loadLevelButtons() {
-        for (int i = 1; i < numLevels + 1; i++) {
+        for (int i = 0; i < numLevels; i++) {
             // get the player name from the static data
             string playerName = StaticData.playerName;
 
             // create a new instance of the player button prefab in the scroll view
-            GameObject button = Instantiate(levelButtonPrefab);
+            GameObject button = Instantiate(buttonPrefab);
             button.transform.SetParent(scrollViewContent.transform);
 
             // load the player from disk to retrieve highest level
@@ -33,10 +30,10 @@ public class LevelsMenu : MonoBehaviour {
 
             // change the text of the button to the playername
             Text buttonText = button.GetComponentsInChildren<Text>()[0];
-            buttonText.text = i == 1 ? "Tutorial" : "Level " + (i - 1);
+            buttonText.text = i == 0 ? "Tutorial" : "Level " + i;
 
             // change the color and listener of the button based upon users level
-            if (i < player.getHighestLevelCompleted() + 3) {
+            if (i < player.getHighestLevelCompleted() + 2) {
                 buttonText.color = new Color(255, 255, 255);
                 int level = i;
                 button.GetComponent<Button>().onClick.AddListener(() => loadLevel(level));
@@ -50,6 +47,6 @@ public class LevelsMenu : MonoBehaviour {
     }
 
     public void loadLevel(int levelNumber) {
-        transitionManager.LoadScene(numMenus - 1 + levelNumber);
+        transitionManager.LoadScene("Level " + levelNumber);
     }
 }
