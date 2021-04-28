@@ -5,26 +5,25 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CommandProcessor))]
 public class Player : MonoBehaviour, IEntity {
 
+    [SerializeField] private float movementSpeed = 10f;
+    [SerializeField] private float paddleXBound = 7.2f;
+    [SerializeField] private Sprite[] paddles = new Sprite[5];
+
     private CommandProcessor commandProcessor;
     private LevelManager levelManager;
     private MenuManager menuManager;
+    private SpriteRenderer spriteRenderer;
 
     private string playerName;
     private int highestLevelCompleted;
     private int paddleId;
     private List<List<Command>> recordings;
-    private int lives = 3;
-    private int score = 0;
-
-
-    [SerializeField] private float movementSpeed = 10f;
-    [SerializeField] private float paddleXBound = 7.2f;
 
     private Vector2 currentMove;
     private bool moving;
+    private int lives = 3;
+    private int score = 0;
 
-    private SpriteRenderer spriteRenderer;
-    [SerializeField] private Sprite[] paddles = new Sprite[5];
 
     Rigidbody2D IEntity.rb => null;
 
@@ -89,11 +88,6 @@ public class Player : MonoBehaviour, IEntity {
         SaveSystem.savePlayerData(this);
     }
 
-    public void saveRecording() {
-        recordings.Add(commandProcessor.clear());
-        save();
-    }
-
     public string getPlayerName() {
         return playerName;
     }
@@ -144,7 +138,9 @@ public class Player : MonoBehaviour, IEntity {
 
             if (levelManager.getLevel() > highestLevelCompleted) {
                 highestLevelCompleted = levelManager.getLevel() + 1;
+                recordings.Add(commandProcessor.getCommands());
                 save();
+                Debug.Log(recordings.Count);
             }
         }
     }
@@ -153,8 +149,5 @@ public class Player : MonoBehaviour, IEntity {
         return recordings;
     }
 
-    public CommandProcessor getCommandProcessor() {
-        return commandProcessor;
-    }
 
 }
