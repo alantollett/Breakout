@@ -22,7 +22,7 @@ public class RecordingsMenu : MonoBehaviour {
         string playerName = StaticData.playerName;
         GameObject go = Instantiate(playerPrefab);
         Player player = go.GetComponent<Player>();
-        player.loadOld(playerName);
+        //player.loadOld(playerName);
 
         for (int i = 0; i < player.getRecordingNames().Count; i++) {
 
@@ -46,7 +46,7 @@ public class RecordingsMenu : MonoBehaviour {
 
     public void loadRecording(string recordingName) {
         int levelNum = int.Parse(recordingName.Split(' ')[1]);
-        StaticData.replayName = recordingName;
+        //StaticData.replayName = recordingName;
         transitionManager.LoadScene(numMenus + levelNum);
     }
 }

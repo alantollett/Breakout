@@ -5,5 +5,5 @@ using UnityEngine;
 public static class StaticData {
 
     public static string playerName = "Test";
-    public static string replayName = null;
+    public static int paddleId = -1;
 }

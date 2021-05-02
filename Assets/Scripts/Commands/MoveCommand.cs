@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class MoveCommand : Command {
 
     private Vector2 direction;

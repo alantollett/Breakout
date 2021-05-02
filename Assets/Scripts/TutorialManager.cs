@@ -1,47 +1,62 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour {
 
-    [SerializeField] private GameObject[] messages;
-    private int currentMessage = 0;
+    [SerializeField] private Text message;
+    private Queue<int> messagesQ = new Queue<int>();
+    private int messageIndex;
+
+    private string[] messages = { 
+        "The aim of the game is to destroy all of the bricks.",
+        "To do so you will need to move your paddle.\nPress <- or -> to Move.",
+        "You will also need to fire the ball at the bricks.\nPress Space to Fire.",
+        "Keep playing until you destroy all the bricks or run out of lives!",
+        "Pause at any point by pressing Esc!",
+        ""
+    };
 
     private void Awake() {
-        // show aim message for 5s then move to movement message
-        StartCoroutine(displayMessage(1, 5));
+        messagesQ.Enqueue(0);
+        messagesQ.Enqueue(1);
+        messageIndex = 2;
+        StartCoroutine(queueCheck());
     }
 
-    private void Update() {
-        for (int i = 0; i < messages.Length; i++) {
-            if(i == currentMessage) {
-                messages[i].SetActive(true);
-            }else {
-                messages[i].SetActive(false);
-            }
+    private void OnEnable() {
+        InputManager.OnMove += Move;
+        InputManager.OnFire += Fire;
+    }
+
+    private void OnDisable() {
+        InputManager.OnMove -= Move;
+        InputManager.OnFire -= Fire;
+    }
+
+    private IEnumerator queueCheck() {
+        for( ; ; ) {
+            Debug.Log(messagesQ.Count);
+            if(messagesQ.Count > 0) message.text = messages[messagesQ.Dequeue()];
+            yield return new WaitForSeconds(4);
         }
     }
 
-    public void setMessageIndex(int index) {
-        // check if tutorial is finished and return
-        if (currentMessage == -1) return;
-
-        // otherwise, update the message if the message requested
-        // is furhter in the tutorial than the current message...
-        if (index > currentMessage) {
-            // display the message after a 2s delay
-            StartCoroutine(displayMessage(index, 2));
-
-            if (index == 3) {
-                // if final message, after 10s remove all messages
-                StartCoroutine(displayMessage(-1, 10));
-            }
+    private void Move() {
+        if (messageIndex == 2) {
+            messagesQ.Enqueue(messageIndex);
+            messageIndex++;
         }
     }
 
-    private IEnumerator displayMessage(int index, int seconds) {
-        yield return new WaitForSeconds(seconds);
-        currentMessage = index;
+    private void Fire() {
+        if (messageIndex == 3) {
+            messagesQ.Enqueue(3);
+            messagesQ.Enqueue(4);
+            messagesQ.Enqueue(5);
+            messageIndex = 5;
+        }
     }
 
 }

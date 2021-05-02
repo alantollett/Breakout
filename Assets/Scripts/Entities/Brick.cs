@@ -5,12 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Brick : MonoBehaviour {
 
-    [SerializeField] private int maxHealth = 1;
+    [SerializeField] private int health = 1;
+    [SerializeField] private int points = 1;
+    private int maxHealth;
+
+    // remove sprites to another component
     [SerializeField] private Sprite[] sprites = new Sprite[3];
     [SerializeField] private LevelManager levelManager;
-
-    private int health;
     private SpriteRenderer spriteRenderer;
+
+     
+    public static event System.Action<int> OnBrickBreak;
+
 
     // cache resources
     public void Awake() {
@@ -19,16 +25,16 @@ public class Brick : MonoBehaviour {
 
     // initialise values
     public void Start() {
-        health = maxHealth;
         spriteRenderer.sprite = sprites[0];
+        maxHealth = health;
     }
 
     public void hit() {
         health -= 1;
 
         if (health <= 0) {
-            levelManager.getPlayer().setScore(levelManager.getPlayer().getScore() + 1);
             Destroy(this.gameObject);
+            OnBrickBreak?.Invoke(points);
         } else {
             // change to third broken / two thirds broken / ... sprites.
             int step = maxHealth / 3;

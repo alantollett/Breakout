@@ -10,7 +10,6 @@ public class PlayerData {
     [SerializeField] private string recordings;
     [SerializeField] private List<string> recordingNames;
 
-
     public PlayerData(Player player) {
         name = player.getPlayerName();
         highestLevelCompleted = player.getHighestLevelCompleted();

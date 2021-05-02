@@ -23,7 +23,8 @@ public class ExistingUserMenu : MonoBehaviour {
             // get the player name and paddle id from the player file
             string[] parts = files[i].Split('/');
             string playerName = parts[parts.Length - 1].Split('.')[0];
-
+            StaticData.playerName = playerName;
+            
             // create a new instance of the player button prefab in the scroll view
             GameObject button = Instantiate(playerButtonPrefab);
             button.transform.SetParent(scrollViewContent.transform);
@@ -35,7 +36,6 @@ public class ExistingUserMenu : MonoBehaviour {
             // load the player from disk to retrieve paddle and level
             GameObject go = Instantiate(playerPrefab);
             Player player = go.GetComponent<Player>();
-            player.loadOld(playerName);
 
             // change the image of the button to the paddle
             Image img = button.GetComponentsInChildren<Image>()[1];
@@ -49,14 +49,9 @@ public class ExistingUserMenu : MonoBehaviour {
             Destroy(go);
 
             // add click listeners
-            button.GetComponent<Button>().onClick.AddListener(() => login(playerName));
+            string name = playerName;
+            button.GetComponent<Button>().onClick.AddListener(() => StaticData.playerName = name);
             button.GetComponent<Button>().onClick.AddListener(() => transitionManager.LoadScene("Game Menu"));
         }
-    }
-
-    public void login(string playerName) {
-        // provide a static point of access to the selected player
-        // as we need a way for the new scene to access the data
-        StaticData.playerName = playerName;
     }
 }

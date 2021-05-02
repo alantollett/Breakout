@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MenuManager : MonoBehaviour {
 
@@ -8,13 +6,25 @@ public class MenuManager : MonoBehaviour {
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject loseMenu;
 
-    public void setPauseMenuVisible(bool visible) {
-        pauseMenu.SetActive(visible);
+    private void OnEnable() {
+        // register for events
+        LevelManager.OnLevelLose += ShowLoseMenu;
+        LevelManager.OnLevelWin += ShowWinMenu;
+        LevelManager.OnLevelPause += ShowPauseMenu;
+        LevelManager.OnLevelResume += HidePauseMenu;
     }
-    public void setWinMenuVisible(bool visible) {
-        winMenu.SetActive(visible);
+
+    private void OnDisable() {
+        // unregister for events
+        LevelManager.OnLevelLose -= ShowLoseMenu;
+        LevelManager.OnLevelWin -= ShowWinMenu;
+        LevelManager.OnLevelPause -= ShowPauseMenu;
+        LevelManager.OnLevelResume -= HidePauseMenu;
     }
-    public void setLoseMenuVisible(bool visible) {
-        loseMenu.SetActive(visible);
-    }
+
+    private void ShowPauseMenu(bool showMenu) => pauseMenu.SetActive(showMenu);
+    private void HidePauseMenu() => pauseMenu.SetActive(false);
+
+    private void ShowWinMenu(int _) => winMenu.SetActive(true);
+    private void ShowLoseMenu() => loseMenu.SetActive(true);
 }

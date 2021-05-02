@@ -26,7 +26,6 @@ public class LevelsMenu : MonoBehaviour {
             // load the player from disk to retrieve highest level
             GameObject go = Instantiate(playerPrefab);
             Player player = go.GetComponent<Player>();
-            player.loadOld(playerName);
 
             // change the text of the button to the playername
             Text buttonText = button.GetComponentsInChildren<Text>()[0];
