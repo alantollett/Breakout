@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 public class LevelManager : MonoBehaviour {
@@ -16,20 +15,17 @@ public class LevelManager : MonoBehaviour {
     public static event System.Action OnLevelResume;
 
     private void OnEnable() {
-        // register for events
         Brick.OnBrickBreak += AddScore;
         Ball.OnBallDeath += RemoveLife;
     }
 
     private void OnDisable() {
-        // unregister for events
         Brick.OnBrickBreak -= AddScore;
         Ball.OnBallDeath -= RemoveLife;
     }
 
     private void Start() {
-        // initially broadcase lives and score for hud
-        // and for the player script to the initial ball to the paddle
+        // broadcast initial values for lives and score for hud
         OnLifeLost?.Invoke(lives);
         OnScoreChange?.Invoke(score);
     }
@@ -41,15 +37,6 @@ public class LevelManager : MonoBehaviour {
         if (FindObjectsOfType<Brick>().Length == 1) {
             OnLevelPause?.Invoke(false);
             OnLevelWin?.Invoke(level);
-
-            /*
-            if (StaticData.replayName == null) {
-                if (recordings == null) loadRecordings();
-                recordings.Add(commandProcessor.getCommands());
-                recordingNames.Add("Level " + levelManager.getLevel() + " " + System.DateTime.Now.ToString("d/MMM hh:mm"));
-                save();
-            }
-            */
         }
     }
 

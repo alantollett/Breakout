@@ -58,9 +58,9 @@ public class PlayerData {
                 string entityName = components[0].Split(' ')[0];
                 IEntity entity = null;
                 if (entityName.Equals("Player")) {
-                    entity = GameObject.Find(entityName).GetComponent<Player>();
-                }else if (entityName.Equals("Ball(Clone)")) {
-                    entity = GameObject.Find(entityName).GetComponent<Ball>();
+                    entity = GameObject.FindObjectOfType<Player>();
+                }else if (entityName.Equals("Ball")) {
+                    entity = GameObject.FindObjectOfType<Ball>();
                 }
                  
                 int frame = int.Parse(components[1]);

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class Player : MonoBehaviour, IEntity {
-    Rigidbody2D IEntity.rb => null; // required as implements IEntity
+    Rigidbody2D IEntity.rb => null;
 
     [SerializeField] private Sprite[] paddles;
     [SerializeField] private GameObject ballPrefab;
@@ -20,21 +19,14 @@ public class Player : MonoBehaviour, IEntity {
 
     public void Awake() {
         LoadPlayer();
-
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = paddles[paddleId];
     }
 
     private void OnEnable() {
-        // register for events
         LevelManager.OnLevelWin += SetHighestLevelCompleted;
-        LevelManager.OnLifeLost += AddBall;
     }
 
     private void OnDisable() {
-        // unregister for events
         LevelManager.OnLevelWin -= SetHighestLevelCompleted;
-        LevelManager.OnLifeLost -= AddBall;
     }
 
     private void LoadPlayer() {
@@ -48,7 +40,7 @@ public class Player : MonoBehaviour, IEntity {
             StaticData.paddleId = -1;
             save();
         } else {
-            // the player alreadt exists (came from existing user menu) so
+            // the player already exists (came from existing user menu) so
             // load the player's data from the disk and populate into this script.
             PlayerData data = SaveSystem.loadPlayerData(playerName);
             highestLevelCompleted = data.getHighestLevelCompleted();
@@ -56,15 +48,9 @@ public class Player : MonoBehaviour, IEntity {
             recordingNames = data.getRecordingNames();
             paddleId = data.getPaddleId();
         }
-    }
 
-    private void AddBall(int remainingLives) {
-        if(remainingLives > 0) {
-            // add a ball to the scene
-            Ball ball = Instantiate(ballPrefab).GetComponent<Ball>();
-            ball.transform.position = new Vector3(transform.position.x, -3.55f, 0);
-            ball.transform.parent = this.transform;
-        }
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = paddles[paddleId];
     }
 
     public void save() {
@@ -96,5 +82,13 @@ public class Player : MonoBehaviour, IEntity {
 
     public int getPaddleId() {
         return paddleId;
+    }
+
+    public void AddRecordingName(string name) {
+        recordingNames.Add(name);
+    }
+
+    public void AddRecording(List<Command> recording) {
+        recordings.Add(recording);
     }
 }

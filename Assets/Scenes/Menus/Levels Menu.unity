@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionManager: {fileID: 106847990}
-  numLevels: 10
+  numLevels: 3
   scrollViewContent: {fileID: 2034793613}
   buttonPrefab: {fileID: 6315202079445013853, guid: 01857eb5d1118ee46910aca86877dfa7,
     type: 3}

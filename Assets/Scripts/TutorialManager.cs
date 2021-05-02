@@ -6,10 +6,8 @@ using UnityEngine.UI;
 public class TutorialManager : MonoBehaviour {
 
     [SerializeField] private Text message;
-    private Queue<int> messagesQ = new Queue<int>();
-    private int messageIndex;
-
-    private string[] messages = { 
+    [SerializeField]
+    private string[] messages = {
         "The aim of the game is to destroy all of the bricks.",
         "To do so you will need to move your paddle.\nPress <- or -> to Move.",
         "You will also need to fire the ball at the bricks.\nPress Space to Fire.",
@@ -17,6 +15,9 @@ public class TutorialManager : MonoBehaviour {
         "Pause at any point by pressing Esc!",
         ""
     };
+
+    private Queue<int> messagesQ = new Queue<int>();
+    private int messageIndex;
 
     private void Awake() {
         messagesQ.Enqueue(0);
@@ -37,7 +38,6 @@ public class TutorialManager : MonoBehaviour {
 
     private IEnumerator queueCheck() {
         for( ; ; ) {
-            Debug.Log(messagesQ.Count);
             if(messagesQ.Count > 0) message.text = messages[messagesQ.Dequeue()];
             yield return new WaitForSeconds(4);
         }

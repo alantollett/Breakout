@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour {
 
     [SerializeField] private float paddleMovementSpeed = 10f;
-    [SerializeField] private float paddleXBound = 6.85f;
+    [SerializeField] public float paddleXBound = 6.85f;
 
     public static event System.Action OnMove;
     public static event System.Action OnFire;
@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour {
     private CommandProcessor commandProcessor;
     private RecordingManager recordingManager;
     private Player player;
+    private Ball ball;
 
     private Vector2 currentMove;
     private bool moving;
@@ -25,6 +26,7 @@ public class InputManager : MonoBehaviour {
         recordingManager = FindObjectOfType<RecordingManager>();
         commandProcessor = GetComponent<CommandProcessor>();
         player = GetComponent<Player>();
+        ball = FindObjectOfType<Ball>();
     }
 
     private void OnEnable() {
@@ -53,16 +55,14 @@ public class InputManager : MonoBehaviour {
             if (moving && recordingManager != null) {
                 int frame = recordingManager.getFrame();
                 commandProcessor.Execute(new MoveCommand(player, frame, currentMove, paddleMovementSpeed * Time.deltaTime));
+                OnMove?.Invoke();
 
-                
                 // ensure that paddle is within bounds of the screen via code (not using RBs - read notes)
                 if (transform.position.x >= paddleXBound) {
                     transform.position = new Vector2(paddleXBound, transform.position.y);
                 } else if (transform.position.x <= -paddleXBound) {
                     transform.position = new Vector2(-paddleXBound, transform.position.y);
                 }
-
-                OnMove?.Invoke();
             }
         }
     }
@@ -80,8 +80,6 @@ public class InputManager : MonoBehaviour {
     }
 
     public void Fire(InputAction.CallbackContext context) {
-        Ball ball = FindObjectOfType<Ball>();
-
         if (context.started && !paused && recordingManager != null && ball != null && !ball.isMoving()) {
             // fire the ball at an angle between 20 and 160 degrees to ensure that it
             // does not start off going too horizontal or even below the paddle...
